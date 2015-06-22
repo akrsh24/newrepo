@@ -1,0 +1,1516 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0096)http://www.c-sharpcorner.com/uploadfile/rawatgaurav/find-nth-element-from-last-in-a-linked-list/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>
+Find nth element from last in a Linked List
+</title> <title>Find nth element from last in a Linked List</title> <meta name="Keywords" content="linked list,nth element from last in a linked list"> <meta name="DESCRIPTION" content="One very interesting problem is to find the nth element from the end in a linked list. Now it&#39;s very easy to find the nth element from the beginning of the list and can be done in one traverse. So what are the various solutions we can think of."> <meta name="Search.TopicType" content="kbArticle"> <meta name="Search.PublishDate" content="27 Jan 2011 12:00:00 GMT"> <meta name="Search.RevisedDate" content="21 Feb 2011 01:34:37 GMT"> <meta name="Search.UserRating" content="0%"> <meta name="CODE_LANGUAGE" content="C#"> <meta name="MS.LOCALE" content="en-US">  <meta name="Author" content="Gaurav Rawat"> <link rel="stylesheet" type="text/css" href="./Find nth element from last in a Linked List_files/csharp_articles_15062015.css"><link href="./Find nth element from last in a Linked List_files/responsive_15062015.css" rel="stylesheet" type="text/css"><link href="./Find nth element from last in a Linked List_files/SyntaxHighlighter.css" rel="stylesheet" type="text/css"><link rel="Shortcut Icon" href="http://www.c-sharpcorner.com/Images/McnIcon.ico"><meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=.3)"><meta property="fb:app_id" content="440531902678919"> <script type="text/javascript" async="" src="./Find nth element from last in a Linked List_files/ga.js"></script><script src="./Find nth element from last in a Linked List_files/jquery.TrendingNow_09032014.js"></script><script src="./Find nth element from last in a Linked List_files/MindcrackerJScript.js"></script><script src="./Find nth element from last in a Linked List_files/jquery.min.js" type="text/javascript"></script> <script type="text/javascript">
+var $j = jQuery.noConflict();
+$j(document).ready(function() {
+$j(".expand").click(function() {
+var thisBtn = $j(this);
+if (!thisBtn.hasClass('hideExpand')) {
+$j(this).addClass("hideExpand");
+$j(".innerArticleIcons").css("height", "36px");
+// var iconSCount = $j(".innerArticleIcons ul li a").length;
+var iconSCount = $j(".innerArticleIcons ul li a:visible").length;
+var innerArticlesWidth = iconSCount * 42;
+$j(".innerArticleIcons").animate({
+width: innerArticlesWidth,
+opacity: 1.0
+}, 1500);
+$j(".viewBar").animate({
+opacity: 0
+}, 1500);
+}
+else {
+$j(".innerArticleIcons").animate({
+width: "1px",
+opacity: 0.4
+}, 1500);
+setTimeout(function() {
+$j(".innerArticleIcons").css("height", "1px");
+}, 1500);
+$j(".viewBar").animate({
+opacity: 1
+}, 1500);
+$j(this).removeClass("hideExpand");
+}
+});
+});
+// Script for share popup window
+function popupwindowAtCenter(url, title, w, h) {
+var left = (screen.width / 2) - (w / 2);
+var top = (screen.height / 2) - (h / 2);
+return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+}
+</script> <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"></head> <body id="MasterBody"> <form name="aspnetForm" method="post" action="http://www.c-sharpcorner.com/uploadfile/rawatgaurav/find-nth-element-from-last-in-a-linked-list/Default.aspx" onsubmit="javascript:return WebForm_OnSubmit();" id="aspnetForm"> <div> <input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value=""> <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value=""> <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value=""> <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTY1NDU2MTA1Mg9kFgJmDw8WDh4IQXV0aG9ySUQFC3Jhd2F0Z2F1cmF2Hg1DdXJyZW50UmF0aW5nBQEwHgZTdGF0dXMFATIeC0hhc0ZlZWRiYWNraB4JQXJ0aWNsZUlEBSRlMmU1Y2U5NC04ODEzLTQ4NDAtOTA0Yy04ZjU3N2JmMTAyNDUeD01pbm9yQ2F0ZWdvcnlJZAUDMTQ0Hg5Ud2l0dGVySGFuZGxlcmVkFgICAQ9kFiRmD2QWCAIBD2QWBgIBDxYCHgdWaXNpYmxlZ2QCAw8PFgQeC05hdmlnYXRlVXJsBUtodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tL1VzZXJSZWdpc3RyYXRpb24vVXNlclJlZ2lzdHJhdGlvbi5hc3B4P2NoZWNrPXIfB2dkZAIVDw8WAh8HaGRkAgMPZBYCAgEPFgIeC18hSXRlbUNvdW50AgQWCGYPZBYCZg8VAldodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tL0V2ZW50cy8xNTkvd2ViaW5hci1nZXR0aW5nLXN0YXJ0ZWQtd2l0aC1tdmMtYW5ndWxhcmpzLmFzcHgtV2ViaW5hcjogR2V0dGluZyBTdGFydGVkIHdpdGggTVZDICYgQW5ndWxhckpTZAIBD2QWAmYPFQJhaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS9FdmVudHMvMTU2L0MtU2hhcnAtY29ybmVyLWtvbGthdGEtY2hhcHRlci1tZWV0LWEtZGF5LXdpdGgtYXp1cmUuYXNweDBDIyBDb3JuZXIgS29sa2F0YSBDaGFwdGVyIE1lZXQ6IEEgZGF5IHdpdGggQXp1cmVkAgIPZBYCZg8VAkhodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tL1VwbG9hZEZpbGUvODRjODViL2lzLW12Yy1yZXBsYWNpbmctQXNwLU5ldC8gTGVhcm46IElzIE1WQyByZXBsYWNpbmcgQVNQLk5FVD9kAgMPZBYCZg8VAllodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tL1VwbG9hZEZpbGUvbWFoZXNoL3N1Y2Nlc3MtcmVxdWlyZXMtcGF0aWVuY2UtYW5kLXBlcnNpc3RlbmNlLzFDQVJFRVI6IFN1Y2Nlc3MgUmVxdWlyZXMgUGF0aWVuY2UgYW5kIFBlcnNpc3RlbmNlZAIFD2QWBAIBDxYCHgRocmVmBRxodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tZAIDD2QWAgIBDw8WAh8HaGRkAgcPZBYCAgEPZBYCAgEPPCsACQEADxYEHghEYXRhS2V5cxYAHwkCVGQWqAFmD2QWAmYPFQIwaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzIzNy9uZXQtMjAxNS5hc3B4CS5ORVQgMjAxNWQCAQ9kFgJmDxUCNWh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS81Ny9uZXQtYXNzZW1ibGllcy5hc3B4Dy5ORVQgQXNzZW1ibGllc2QCAg9kFgJmDxUCL2h0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8xMzEvYWRvLW5ldC5hc3B4B0FETy5ORVRkAgMPZBYCZg8VAixodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMTc2L2FqYXguYXNweARBSkFYZAIED2QWAmYPFQI8aHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzU2L2FsZ29yaXRobXMtaW4tQy1TaGFycC5hc3B4EEFsZ29yaXRobXMgaW4gQyNkAgUPZBYCZg8VAjtodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMjQ3L2FuZHJvaWQtcHJvZ3JhbW1pbmcuYXNweBNBbmRyb2lkIFByb2dyYW1taW5nZAIGD2QWAmYPFQIxaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzMwMi9hbmd1bGFyanMuYXNweAlBbmd1bGFySlNkAgcPZBYCZg8VAjRodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMzE2L2FyY2hpdGVjdHVyZS5hc3B4DEFyY2hpdGVjdHVyZWQCCA9kFgJmDxUCO2h0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8yMjQvQXNwLU5ldC1wcm9ncmFtbWluZy5hc3B4E0FTUC5ORVQgUHJvZ3JhbW1pbmdkAgkPZBYCZg8VAi1odHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMjMyL2F6dXJlLmFzcHgFQXp1cmVkAgoPZBYCZg8VAjBodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMzA5L2J1c2luZXNzLmFzcHgIQnVzaW5lc3NkAgsPZBYCZg8VAjtodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMTQ0L0MtU2hhcnAtcHJvZ3JhbW1pbmcuYXNweA5DIyBQcm9ncmFtbWluZ2QCDA9kFgJmDxUCMWh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8yODIvYy1jcHAtbWZjLmFzcHgLQywgQysrLCBNRkNkAg0PZBYCZg8VAjVodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMjM4L2NhcmVlci1hZHZpY2UuYXNweA1DYXJlZXIgQWR2aWNlZAIOD2QWAmYPFQIwaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzI4MC9jaGFwdGVycy5hc3B4CENoYXB0ZXJzZAIPD2QWAmYPFQI8aHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzY4L2NvZGluZy1iZXN0LXByYWN0aWNlcy5hc3B4FUNvZGluZyBCZXN0IFByYWN0aWNlc2QCEA9kFgJmDxUCN2h0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8xNzAvY3VycmVudC1hZmZhaXJzLmFzcHgPQ3VycmVudCBBZmZhaXJzZAIRD2QWAmYPFQI1aHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzIyMC9kYXRhYmFzZXMtZGJhLmFzcHgPRGF0YWJhc2VzICYgREJBZAISD2QWAmYPFQJAaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzYyL2Rlc2lnbi1wYXR0ZXJucy1wcmFjdGljZXMuYXNweBtEZXNpZ24gUGF0dGVybnMgJiBQcmFjdGljZXNkAhMPZBYCZg8VAjRodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMjkzL2R5bmFtaWNzLWNybS5hc3B4DER5bmFtaWNzIENSTWQCFA9kFgJmDxUCPmh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8xNTkvZW50ZXJwcmlzZS1kZXZlbG9wbWVudC5hc3B4FkVudGVycHJpc2UgRGV2ZWxvcG1lbnRkAhUPZBYCZg8VAjlodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvNjQvZXhjZXB0aW9uLWhhbmRsaW5nLmFzcHgSRXhjZXB0aW9uIEhhbmRsaW5nZAIWD2QWAmYPFQJAaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzY1L2dhbWVzLXByb2dyYW1taW5nLUMtU2hhcnAuYXNweBRHYW1lcyBQcm9ncmFtbWluZyBDI2QCFw9kFgJmDxUCOmh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8zMjMvZ29vZ2xlLWRldmVsb3BtZW50LmFzcHgSR29vZ2xlIERldmVsb3BtZW50ZAIYD2QWAmYPFQI3aHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzI5NC9ncmFwaGljcy1kZXNpZ24uYXNweA9HcmFwaGljcyBEZXNpZ25kAhkPZBYCZg8VAjBodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMjIxL2hhcmR3YXJlLmFzcHgISGFyZHdhcmVkAhoPZBYCZg8VAjBodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMzE4L2hvbG9sZW5zLmFzcHgISG9sb0xlbnNkAhsPZBYCZg8VAjBodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMTQzL2hvdy1kby1pLmFzcHgJSG93IGRvIEkgZAIcD2QWAmYPFQIuaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzI0NC9odG1sLTUuYXNweAZIVE1MIDVkAh0PZBYCZg8VAjNodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvNjYvaW50ZXJuZXQtd2ViLmFzcHgOSW50ZXJuZXQgJiBXZWJkAh4PZBYCZg8VAjpodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMzIwL2ludGVybmV0LW9mLXRoaW5ncy5hc3B4EkludGVybmV0IG9mIFRoaW5nc2QCHw9kFgJmDxUCK2h0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8yMzUvaW9zLmFzcHgDaU9TZAIgD2QWAmYPFQIsaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzI1OC9qYXZhLmFzcHgESmF2YWQCIQ9kFgJmDxUCMmh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8yMzMvamF2YXNjcmlwdC5hc3B4CkphdmFTY3JpcHRkAiIPZBYCZg8VAi5odHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMjM2L2pxdWVyeS5hc3B4BkpRdWVyeWQCIw9kFgJmDxUCMGh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8zMDAva25vY2tvdXQuYXNweAhLbm9ja291dGQCJA9kFgJmDxUCMmh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8yNzgvbGVhZGVyc2hpcC5hc3B4CkxlYWRlcnNoaXBkAiUPZBYCZg8VAjFodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMTg2L2xlYXJuLW5ldC5hc3B4CkxlYXJuIC5ORVRkAiYPZBYCZg8VAixodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMTgwL2xpbnEuYXNweARMSU5RZAInD2QWAmYPFQI4aHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzI4OC9taWNyb3NvZnQtb2ZmaWNlLmFzcHgQTWljcm9zb2Z0IE9mZmljZWQCKA9kFgJmDxUCN2h0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8yNDUvbWljcm9zb2Z0LXBob25lLmFzcHgPTWljcm9zb2Z0IFBob25lZAIpD2QWAmYPFQItaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzY3L21vYmlsZS5hc3B4Bk1vYmlsZWQCKg9kFgJmDxUCNmh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8xNDkvbXVsdGl0aHJlYWRpbmcuYXNweA5NdWx0aXRocmVhZGluZ2QCKw9kFgJmDxUCMmh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8xNjcvbmV0d29ya2luZy5hc3B4Ck5ldHdvcmtpbmdkAiwPZBYCZg8VAi9odHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMzA0L25vZGUtanMuYXNweAdOb2RlLmpzZAItD2QWAmYPFQI6aHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzE0Ni9vZmZpY2UtZGV2ZWxvcG1lbnQuYXNweBJPZmZpY2UgRGV2ZWxvcG1lbnRkAi4PZBYCZg8VAi5odHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMjA4L29vcG9vZC5hc3B4B09PUC9PT0RkAi8PZBYCZg8VAjNodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMjc2L29wZW4tc291cmNlLmFzcHgLT3BlbiBTb3VyY2VkAjAPZBYCZg8VAjlodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMjIyL29wZXJhdGluZy1zeXN0ZW1zLmFzcHgRT3BlcmF0aW5nIFN5c3RlbXNkAjEPZBYCZg8VAi5odHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMjk5L29yYWNsZS5hc3B4Bk9yYWNsZWQCMg9kFgJmDxUCM2h0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8zMTUvb3V0c291cmNpbmcuYXNweAtPdXRzb3VyY2luZ2QCMw9kFgJmDxUCMmh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8zMTEvcGhpbG9zb3BoeS5hc3B4ClBoaWxvc29waHlkAjQPZBYCZg8VAitodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMjc5L3BocC5hc3B4A1BIUGQCNQ9kFgJmDxUCMGh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8zMDgvcG93ZXItYmkuYXNweAhQb3dlciBCSWQCNg9kFgJmDxUCMGh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8yODMvcHJvZHVjdHMuYXNweAhQcm9kdWN0c2QCNw9kFgJmDxUCOmh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8xOTgvcHJvamVjdC1tYW5hZ2VtZW50LmFzcHgSUHJvamVjdCBNYW5hZ2VtZW50ZAI4D2QWAmYPFQIuaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzMyMi9weXRob24uYXNweAZQeXRob25kAjkPZBYCZg8VAj1odHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMTg4L3JlcG9ydHMtdXNpbmctQy1TaGFycC5hc3B4EFJlcG9ydHMgdXNpbmcgQyNkAjoPZBYCZg8VAjJodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMTgzL3NoYXJlcG9pbnQuYXNweApTaGFyZVBvaW50ZAI7D2QWAmYPFQIvaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzMwMS9zaWduYWxyLmFzcHgHU2lnbmFsUmQCPA9kFgJmDxUCM2h0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8yMTAvc2lsdmVybGlnaHQuYXNweAtTaWx2ZXJsaWdodGQCPQ9kFgJmDxUCNGh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8yMTYvc3FsLWxhbmd1YWdlLmFzcHgMU1FMIExhbmd1YWdlZAI+D2QWAmYPFQIyaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzI5Ny9zcWwtc2VydmVyLmFzcHgKU1FMIFNlcnZlcmQCPw9kFgJmDxUCMGh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8zMTIvc3RhcnR1cHMuYXNweAhTdGFydHVwc2QCQA9kFgJmDxUCOWh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8xOTkvc3RyaW5nLWluLUMtU2hhcnAuYXNweAxTdHJpbmcgaW4gQyNkAkEPZBYCZg8VAi9odHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMTc0L3Rlc3RpbmcuYXNweAdUZXN0aW5nZAJCD2QWAmYPFQIyaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzI5MS90eXBlc2NyaXB0LmFzcHgKVHlwZVNjcmlwdGQCQw9kFgJmDxUCOGh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8yNzcvdmlzdWFsLWJhc2ljLW5ldC5hc3B4EVZpc3VhbCBCYXNpYyAuTkVUZAJED2QWAmYPFQI1aHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzI5Ni92aXN1YWwtc3R1ZGlvLmFzcHgNVmlzdWFsIFN0dWRpb2QCRQ9kFgJmDxUCK2h0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8xOTIvd2NmLmFzcHgDV0NGZAJGD2QWAmYPFQIxaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzMwNy93ZWFyYWJsZXMuYXNweAlXZWFyYWJsZXNkAkcPZBYCZg8VAjdodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMTU0L3dlYi1kZXZlbG9wbWVudC5hc3B4D1dlYiBEZXZlbG9wbWVudGQCSA9kFgJmDxUCNGh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8xMzMvd2ViLXNlcnZpY2VzLmFzcHgMV2ViIFNlcnZpY2VzZAJJD2QWAmYPFQIyaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzI3NS93aW5kb3dzLTEwLmFzcHgKV2luZG93cyAxMGQCSg9kFgJmDxUCN2h0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS83Ny93aW5kb3dzLWNvbnRyb2xzLmFzcHgQV2luZG93cyBDb250cm9sc2QCSw9kFgJmDxUCNGh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS83Ni93aW5kb3dzLWZvcm1zLmFzcHgNV2luZG93cyBGb3Jtc2QCTA9kFgJmDxUCOmh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8yNDMvd2luZG93cy1wb3dlcnNoZWxsLmFzcHgSV2luZG93cyBQb3dlclNoZWxsZAJND2QWAmYPFQI7aHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzI5Mi93aW5kb3dzLXNlcnZlci0yMDEyLmFzcHgTV2luZG93cyBTZXJ2ZXIgMjAxMmQCTg9kFgJmDxUCN2h0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS83OC93aW5kb3dzLXNlcnZpY2VzLmFzcHgQV2luZG93cyBTZXJ2aWNlc2QCTw9kFgJmDxUCOmh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS8xMzgvd2luZG93cy1zdG9yZS1hcHBzLmFzcHgSV2luZG93cyBTdG9yZSBBcHBzZAJQD2QWAmYPFQIraHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzE5MS93cGYuYXNweANXUEZkAlEPZBYCZg8VAi9odHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tLzEvMzE5L3hhbWFyaW4uYXNweAdYYW1hcmluZAJSD2QWAmYPFQIsaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzE5MC94YW1sLmFzcHgEWEFNTGQCUw9kFgJmDxUCKmh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vMS83OS94bWwuYXNweANYTUxkAgEPZBYCAgEPFgIfCQIKFhRmD2QWAmYPFQJbaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS9VcGxvYWRGaWxlLzIxOWQ0ZC9iYXNpY3Mtb2YtamF2YXNjcmlwdC1wYXJ0LTVzdHJpbmctZnVuY3Rpb25zLydCYXNpY3Mgb2YgSmF2YVNjcmlwdDogUGFydCA1IChTdHJpbiAuLi5kAgEPZBYCZg8VAllodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tL1VwbG9hZEZpbGUvMjE5ZDRkL2ltcGxlbWVudC1zZWFyY2gtcGFnaW5nLWFuZC1zb3J0LWluLW12Yy01LydJbXBsZW1lbnQgU2VhcmNoLCBQYWdpbmcgYW5kIFNvcnQgaSAuLi5kAgIPZBYCZg8VAmFodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tL1VwbG9hZEZpbGUvMjBjMDZiL3NlZS13aGF0cy1uZXctaW4tQy1TaGFycC02LWFuZC12aXN1YWwtc3R1ZGlvLTIwMTUvJ1NlZSBXaGF0J3MgTmV3IGluIEMjIDYgYW5kIFZpc3VhbCBTIC4uLmQCAw9kFgJmDxUCQGh0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vVXBsb2FkRmlsZS9tYWhlc2gvd2hhdC1pcy1uZXQtMjAxNS8RV2hhdCAuTkVUIDIwMTUgSXNkAgQPZBYCZg8VAk5odHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tL1VwbG9hZEZpbGUvZjU1ZmQ5L292ZXJ2aWV3LW9mLWludGVybmV0LW9mLXRoaW5ncy8eT3ZlcnZpZXcgb2YgSW50ZXJuZXQgb2YgVGhpbmdzZAIFD2QWAmYPFQJoaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS9VcGxvYWRGaWxlLzliODZkNC9ob3ctdG8tcmV0dXJuLW11bHRpcGxlLXZhbHVlcy1mcm9tLWEtZnVuY3Rpb24taW4tQy1TaGFycC8nSG93IHRvIFJldHVybiBNdWx0aXBsZSBWYWx1ZXMgRnJvbSAgLi4uZAIGD2QWAmYPFQJIaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS9VcGxvYWRGaWxlLzg0Yzg1Yi9pcy1tdmMtcmVwbGFjaW5nLUFzcC1OZXQvI0lzIE1WQyBSZXBsYWNpbmcgQVNQLk5FVCBXZWIgRm9ybXM/ZAIHD2QWAmYPFQJHaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS9VcGxvYWRGaWxlLzIxOWQ0ZC9iYXNpY3Mtb2YtanF1ZXJ5LXBhcnQtMS8YQmFzaWNzIG9mIGpRdWVyeTogUGFydCAxZAIID2QWAmYPFQJcaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS9VcGxvYWRGaWxlLzhjMTllOC9Bc3AtTmV0LTUtZ2V0dGluZy1zdGFydGVkLXdpdGgtQXNwLU5ldC1tdmMtNi8nQVNQLk5ldCA1OiBHZXR0aW5nIFN0YXJ0ZWQgV2l0aCBBU1AgLi4uZAIJD2QWAmYPFQJsaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS9VcGxvYWRGaWxlLzAwYThiNy9pbnRlcnZpZXctcXVlc3Rpb25zLWZvci0yLXllYXItZXhwZXJpZW5jZS1pbi1zcWwtYW5kLUMtU2hhcnAvJ0ludGVydmlldyBRdWVzdGlvbnMgRm9yIDIgWWVhcnMgRXhwIC4uLmQCAg9kFgICAQ8PFgYeCENzc0NsYXNzBRdzcHJpdGUgZGV0YWlscyBiZWdpbm5lch4HVG9vbFRpcAUIQmVnaW5uZXIeBF8hU0ICAmRkAgUPFgIfCgU7aHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS8xLzE0NC9DLVNoYXJwLXByb2dyYW1taW5nLmFzcHgWAgIBDw8WBB4ISW1hZ2VVcmwFJy9VcGxvYWRGaWxlL01pbm9yQ2F0SW1hZ2VzLzA3MjkzMkFNLnBuZx8NBQ5DIyBQcm9ncmFtbWluZ2RkAgYPFgIeCWlubmVyaHRtbAUrRmluZCBudGggZWxlbWVudCBmcm9tIGxhc3QgaW4gYSBMaW5rZWQgTGlzdGQCBw8WBB8KBUJodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tL2F1dGhvcnMvcmF3YXRnYXVyYXYvZ2F1cmF2LXJhd2F0LmFzcHgfEAUMR2F1cmF2IFJhd2F0ZAIIDw8WAh4EVGV4dAUMSmFuIDI3LCAyMDExZGQCCQ8WAh8QBc0CPGEgY2xhc3M9J0xpbmtOb3JtYWxHcmF5TGlnaHQnIGhyZWY9J2h0dHA6Ly93d3cuYy1zaGFycGNvcm5lci5jb20vdGFncy9saW5rZWQtbGlzdCc+bGlua2VkIGxpc3Q8L2E+LCA8YSBjbGFzcz0nTGlua05vcm1hbEdyYXlMaWdodCcgaHJlZj0naHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS90YWdzL250aC1lbGVtZW50LWZyb20tbGFzdC1pbi1hLWxpbmtlZC1saXN0Jz5udGggZWxlbWVudCBmcm9tIGxhc3QgaW4gYSBsaW5rZWQgbGlzdDwvYT4sIDxhIGNsYXNzPSdMaW5rTm9ybWFsR3JheUxpZ2h0JyBocmVmPSdodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tL3RhZ3MvJz48L2E+ZAIKDxYCHxAF9AFPbmUgdmVyeSBpbnRlcmVzdGluZyBwcm9ibGVtIGlzIHRvIGZpbmQgdGhlIG50aCBlbGVtZW50IGZyb20gdGhlIGVuZCBpbiBhIGxpbmtlZCBsaXN0LiBOb3cgaXQncyB2ZXJ5IGVhc3kgdG8gZmluZCB0aGUgbnRoIGVsZW1lbnQgZnJvbSB0aGUgYmVnaW5uaW5nIG9mIHRoZSBsaXN0IGFuZCBjYW4gYmUgZG9uZSBpbiBvbmUgdHJhdmVyc2UuIFNvIHdoYXQgYXJlIHRoZSB2YXJpb3VzIHNvbHV0aW9ucyB3ZSBjYW4gdGhpbmsgb2YuZAIMDxYCHxAFHTE1PHNwYW4gY2xhc3M9J3VuaXQnPms8L3NwYW4+ZAINDw8WAh8RBQEwZGQCFA8PFgYfDAUjbmV3U3ByaXRlSWNvbnMgbWFrZV9hcnRpY2xlX2ZlYXR1cmUfDQUaTWFrZSB0aGlzIGFydGljbGUgZmVhdHVyZWQfDgICZGQCGQ8PFgIfDQUMR2F1cmF2IFJhd2F0ZGQCGw8WAh4Fc3R5bGUFL21hcmdpbi10b3A6MTBweDttYXJnaW4tYm90dG9tOjBweDtkaXNwbGF5Om5vbmU7FgICAQ8WAh8HaGQCHQ9kFgICAw8WAh8HaGQCHg8PFgIeCEF1dGhvcklkBQtyYXdhdGdhdXJhdmQWGmYPFgIfCgVCaHR0cDovL3d3dy5jLXNoYXJwY29ybmVyLmNvbS9hdXRob3JzL3Jhd2F0Z2F1cmF2L2dhdXJhdi1yYXdhdC5hc3B4FgICAQ8WAh4Dc3JjBUNodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tL1VwbG9hZEZpbGUvQXV0aG9ySW1hZ2UvcmF3YXRnYXVyYXYuanBnZAIBDxYEHxAFDEdhdXJhdiBSYXdhdB8KBUJodHRwOi8vd3d3LmMtc2hhcnBjb3JuZXIuY29tL2F1dGhvcnMvcmF3YXRnYXVyYXYvZ2F1cmF2LXJhd2F0LmFzcHhkAgIPFgIfEAXDAUkgaGFkIHN0YXJ0ZWQgdGhpcyBibG9nIHRvIGtub3cgbW9yZSBhYm91dCBpbnRyaWNhY2llcyBvZiBDIyBsYW5ndWFnZS4gSSBob3BlIHRvIGJ1aWxkIGEgZ29vZCByZXBvc2l0b3J5IG9mIGFydGljbGVzIGRlZGljYXRlZCB0byBhbGdvcml0aG1zLG9iamVjdCBvcmllbnRlZCBkZXNpZ25pbmcgYW5kIHNvZnR3YXJlIGJlc3QgcHJhY3RpY2VzLmQCAw8WAh8HaGQCBA8WBB4FdGl0bGUFB05vdCBTZXQeBWNsYXNzBQZub3RTZXRkAgUPFgQfFQUHTm90IFNldB8WBQZub3RTZXRkAgYPFgQfFQUHTm90IFNldB8WBQZub3RTZXRkAggPFgIfEAUDNTU2ZAIJDxYCHxAFBTY5LjdrZAIKDxYEHxYFDW1lZGFsIFN0YXJ0ZXIfFQUOU3RhcnRlciBNZW1iZXJkAgsPFgQfFgUNY291bnQgU3RhcnRlch8QBQdTdGFydGVyZAIMDxYEHxYFC2xpXzMgbm90U2V0HxUFIEMjIENvcm5lciBNVlAgLSBOb3QgYXdhcmRlZCB5ZXQuZAINDxYCHwdoZAIgDw8WBh4JQ29udGVudElkBSRlMmU1Y2U5NC04ODEzLTQ4NDAtOTA0Yy04ZjU3N2JmMTAyNDUeDUNvbnRlbnRVc2VySWQFC3Jhd2F0Z2F1cmF2HgxDb250ZW50VGl0bGUFK0ZpbmQgbnRoIGVsZW1lbnQgZnJvbSBsYXN0IGluIGEgTGlua2VkIExpc3RkFgRmD2QWAgIBDxAPFgIfB2hkZGRkAgEPFgIfB2dkAiEPZBYCAgEPZBYCAgIPZBYCAgEPDxYCHgtfIURhdGFCb3VuZGdkZGQjJlKEAS6W1LW+OoWZPE6vZV80eA=="> </div> <script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+theForm.__EVENTTARGET.value = eventTarget;
+theForm.__EVENTARGUMENT.value = eventArgument;
+theForm.submit();
+}
+}
+//]]> </script> <script src="./Find nth element from last in a Linked List_files/WebResource.axd" type="text/javascript"></script> <script src="./Find nth element from last in a Linked List_files/WebResource(1).axd" type="text/javascript"></script> <script src="./Find nth element from last in a Linked List_files/WebResource(2).axd" type="text/javascript"></script> <script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]> </script> <div class="master"> <a name="Top"></a> <div class="responsiveHeader"> <script type="text/javascript">
+$j(document).ready(function() {
+var flag;
+var textBoxClientId = '#ctl00_HeaderWithoutAjax1_Login1_TextBoxUserId';
+var value = $j(textBoxClientId).val();
+$j(textBoxClientId).click(function() {
+if (value == "Invalid ID / Password")
+$j(textBoxClientId).val('');
+});
+//login popup js start here//
+$j('#ctl00_HeaderWithoutAjax1_Login1_loginBtn').click(function() {
+flag = 1;
+$j('#ctl00_HeaderWithoutAjax1_Login1_LoginSpan').slideToggle("slow");
+$j('#ctl00_HeaderWithoutAjax1_Login1_TextBoxUserId').focus();
+});
+$j('#ctl00_HeaderWithoutAjax1_Login1_UserDetailContainer').mouseover(function() {
+$j('#ctl00_HeaderWithoutAjax1_Login1_LogoutSpan').show();
+});
+$j('.loginPopup.loggedIn').mouseover(function() {
+$j('#ctl00_HeaderWithoutAjax1_Login1_LogoutSpan').show();
+$j('.userdetailCntr').addClass('hover');
+});
+$j('#ctl00_HeaderWithoutAjax1_Login1_UserDetailContainer').mouseout(function() {
+$j('#ctl00_HeaderWithoutAjax1_Login1_LogoutSpan').hide();
+});
+$j('.loginPopup.loggedIn').mouseout(function() {
+$j('#ctl00_HeaderWithoutAjax1_Login1_LogoutSpan').hide();
+$j('.userdetailCntr').removeClass('hover');
+});
+$j('.loginPopup').click(function() {
+flag = 1;
+});
+$j('#ctl00_HeaderWithoutAjax1_Login1_UserDetailContainer').click(function() {
+flag = 1;
+});
+$j(document).click(function() {
+if (flag != 1) {
+$j('#ctl00_HeaderWithoutAjax1_Login1_LoginSpan').hide();
+$j('#ctl00_HeaderWithoutAjax1_Login1_LogoutSpan').hide();
+}
+flag = 0;
+});
+//login popup js end here//
+});
+</script> <script>
+$j(document).ready(function() {
+var flag = true;
+var close = true;
+$j('.notificationMessageCntr').click(function() {
+var id = $j(this)[0].id;
+if (id != 'askQuestion') {
+if ($j(this).next().is(':visible')) {
+$j(this).find('.arrow').hide();
+$j(this).next().hide();
+}
+else {
+$j('.msg_container').hide();
+$j('.notificationMessageCntr .arrow').hide();
+flag = false;
+close = false;
+$j(this).find('.arrow').show();
+$j(this).next().show();
+ResetNotificationCount(this);
+}
+}
+});
+$j('.msg_container').click(function() {
+close = false;
+});
+$j(document).click(function() {
+if (close) {
+$j('.notificationMessageCntr .arrow').hide();
+$j('.msg_container').hide();
+flag = true;
+}
+close = true;
+});
+//        if ($j('#ctl00_HeaderWithoutAjax1_Login1_LabelNoData').length > 0)
+//            $j('#ctl00_HeaderWithoutAjax1_Login1_LinkButtonAllMessages').hide();
+});
+//Reset notification count
+//type: 1- Message Notification, 2- Comment Notification
+function ResetNotificationCount(container) {
+var type = 0;
+if ($j(container).attr('id') == 'messageNotification')
+type = 1
+else if ($j(container).attr('id') == 'commentNotification')
+type = 2
+else if ($j(container).attr('id') == 'generalNotifications')
+type = 3
+if (type != 0) {
+$j.ajax({
+url: "/Handlers/CsharpCommon.ashx?method=reset_notification_message_count&type=" + type,
+type: "POST",
+async: false,
+beforeSend: function() {
+if (type == 1)
+$j('#imgComments').show();
+if (type == 2)
+$j('#imgMessages').show();
+if (type == 3)
+$j('#imgGeneralNotifications').show();
+},
+success: function(response) {
+$j(container).find('.messageCount').hide();
+if (response[0] == undefined)
+var response = "";
+if (response == 'login')
+var response = "";
+if (type == 1) {
+if (response != "") {
+$j('#dvMessages').empty();
+$j('#dvMessages').html(response);
+}
+else {
+$j('#ctl00_HeaderWithoutAjax1_Login1_LabelNoData').show();
+}
+}
+if (type == 2) {
+if (response != "") {
+$j('#dvComments').empty();
+$j('#dvComments').html(response);
+}
+else {
+$j('#ctl00_HeaderWithoutAjax1_Login1_LabelNoComments').show();
+}
+}
+if (type == 3) {
+if (response != "") {
+$j('#dvGeneralNotifications').empty();
+$j('#dvGeneralNotifications').html(response);
+}
+else {
+$j('#ctl00_HeaderWithoutAjax1_Login1_LabelNoDataNotifications').show();
+}
+}
+},
+complete: function() {
+if (type == 1)
+$j('#imgComments').hide();
+if (type == 2)
+$j('#imgMessages').hide();
+if (type == 3)
+$j('#imgGeneralNotifications').hide();
+}
+});
+}
+}
+</script> <div class="page" style="position: relative; z-index: 999;"> <div class="loginControl"> <a href="http://www.c-sharpcorner.com/Controls/#" id="ctl00_HeaderWithoutAjax1_Login1_loginBtn" class="icons login" onclick="return false;" title="Login">&nbsp;</a> <a id="ctl00_HeaderWithoutAjax1_Login1_HyperLinkRegister" title="Sign Up" class="icons signUp" href="http://www.c-sharpcorner.com/UserRegistration/UserRegistration.aspx?check=r"></a> <div id="askQuestion" class="notificationMessageCntr display_none_mobile"> <a id="ctl00_HeaderWithoutAjax1_Login1_PostForum" class="icons askaquestion" href="javascript:__doPostBack('ctl00$HeaderWithoutAjax1$Login1$PostForum','')"></a> </div> <div id="commentNotification" class="notificationMessageCntr"> <span class="arrow">&nbsp;</span> </div> <div id="userCommentBox" class="msg_container" style="display: none;"> <div class="NoticationLoading"> <span id="ctl00_HeaderWithoutAjax1_Login1_LabelNoComments" style="color:Red;display: none; text-align: center;">No new comments.</span> <a id="imgComments" href="javascript:void(0)" class="loadmore" style="display: none;
+text-align: center"> <img src="./Find nth element from last in a Linked List_files/ajax-loader_12x9.gif"></a> </div> <ul> <div id="dvComments"> </div> </ul> <a class="LinkNormalBlue" style="margin-right: 10px; float: right; margin-top: 10px;
+font-size: 13px;" href="http://www.c-sharpcorner.com/notification/">Go to all comments &gt;&gt;</a> </div> <div id="messageNotification" class="notificationMessageCntr"> <span class="arrow">&nbsp;</span> </div> <div id="userMsgBox" class="msg_container" style="display: none;"> <div class="NoticationLoading"> <span id="ctl00_HeaderWithoutAjax1_Login1_LabelNoData" style="color:Red;display: none; text-align: center;">No new messages.</span> <a id="imgMessages" href="javascript:void(0)" class="loadmore" style="display: none;
+text-align: center"> <img src="./Find nth element from last in a Linked List_files/ajax-loader_12x9.gif"></a> </div> <ul> <div id="dvMessages"> </div> </ul> <a id="ctl00_HeaderWithoutAjax1_Login1_LinkButtonAllMessages" class="LinkNormalBlue" href="javascript:__doPostBack('ctl00$HeaderWithoutAjax1$Login1$LinkButtonAllMessages','')" style="margin-right: 10px;
+float: right; margin-top: 10px;">Go to all messages &gt;&gt;</a> </div> <div id="generalNotifications" class="notificationMessageCntr"> <span class="arrow">&nbsp;</span> </div> <div id="generalNotificationContainer" class="msg_container general_notifications" style="display: none;"> <div class="NoticationLoading"> <span id="ctl00_HeaderWithoutAjax1_Login1_LabelNoDataNotifications" style="color:Red;display: none; text-align: center;">No new notifications.</span> <a id="imgGeneralNotifications" href="javascript:void(0)" class="loadmore" style="display: none;
+text-align: center"> <img src="./Find nth element from last in a Linked List_files/ajax-loader_12x9.gif"></a> </div> <ul> <div id="dvGeneralNotifications"> </div> </ul> <a class="LinkNormalBlue" style="margin-right: 10px; float: right; margin-top: 10px;
+color: #06c; font-size: 13px;" href="http://www.c-sharpcorner.com/notification/GeneralNotification.aspx">Go
+to all notifications &gt;&gt;</a> </div> <div class="notificationMessageCntr display_none_mobile"> <span class="arrow">&nbsp;</span> </div> <div class="msg_container" style="display: none;"> <ul id="ctl00_HeaderWithoutAjax1_Login1_UnapprovedContentStats" class="unapproved_stats"> </ul> </div> </div> <div id="ctl00_HeaderWithoutAjax1_Login1_LoginSpan" class="loginPopup" onkeypress="javascript:return WebForm_FireDefaultButton(event, &#39;ctl00_HeaderWithoutAjax1_Login1_ImageButtonLogin&#39;)" style="display: none;"> <center> <span id="ctl00_HeaderWithoutAjax1_Login1_LabelErrorMessage" style="color:Red;padding-bottom: 5px;"></span></center> <span class="arrow">&nbsp;</span> <div class="row"> <label class="lableText">
+Email :</label> <input name="ctl00$HeaderWithoutAjax1$Login1$TextBoxUserId" type="text" id="ctl00_HeaderWithoutAjax1_Login1_TextBoxUserId" class="inputBox" placeholder="Enter User ID or Email" style="width: 150px;"> <span id="ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorUserId" style="color:Red;display:none;">*</span> </div> <div class="row"> <label class="lableText">
+Password :
+</label> <input name="ctl00$HeaderWithoutAjax1$Login1$TextBoxPassword" type="password" maxlength="15" id="ctl00_HeaderWithoutAjax1_Login1_TextBoxPassword" class="inputBox" placeholder="Enter Password" autocomplete="off" style="width: 150px;"> <span id="ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorPassword" style="color:Red;display:none;">*</span> </div> <div class="row"> <label class="lableText">
+&nbsp;</label> <label class="lableText" style="width: auto"> <input type="checkbox" checked="checked" name="a">Remember me?</label> </div> <div class="row"> <label class="lableText">
+&nbsp;</label> <input type="submit" name="ctl00$HeaderWithoutAjax1$Login1$ImageButtonLogin" value="Login" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$HeaderWithoutAjax1$Login1$ImageButtonLogin&quot;, &quot;&quot;, true, &quot;LeftLogin&quot;, &quot;&quot;, false, false))" id="ctl00_HeaderWithoutAjax1_Login1_ImageButtonLogin" title="Login"> <a href="http://www.c-sharpcorner.com/UserRegistration/UserRegistration.aspx?check=f" class="LinkRed">Forgot password</a> </div> <div class="row2"> <label class="lableText2">
+Login using
+</label> <a class="facebook" onclick="FacebookLogin(); return false;" title="Facebook"></a>
+&nbsp;<a id="googleLoginHeader" class="google" title="Google"></a> </div> </div> <a class="menuButton"></a><a href="http://www.c-sharpcorner.com/" class="logo_responsive">
+&nbsp;</a> </div> <input type="hidden" id="HiddenErrorMessage" value="Unable to fetch your account data!"> <input type="hidden" name="ctl00$HeaderWithoutAjax1$Login1$HiddenFieldUserId" id="ctl00_HeaderWithoutAjax1_Login1_HiddenFieldUserId"> <input type="hidden" name="ctl00$HeaderWithoutAjax1$Login1$HiddenFieldEmail" id="ctl00_HeaderWithoutAjax1_Login1_HiddenFieldEmail"> <input type="hidden" name="ctl00$HeaderWithoutAjax1$Login1$HiddenFieldFirstName" id="ctl00_HeaderWithoutAjax1_Login1_HiddenFieldFirstName"> <input type="hidden" name="ctl00$HeaderWithoutAjax1$Login1$HiddenFieldLastName" id="ctl00_HeaderWithoutAjax1_Login1_HiddenFieldLastName"> <input type="hidden" name="ctl00$HeaderWithoutAjax1$Login1$HiddenFieldType" id="ctl00_HeaderWithoutAjax1_Login1_HiddenFieldType"> <input type="submit" name="ctl00$HeaderWithoutAjax1$Login1$ButtonLoginSocial" value="" id="ctl00_HeaderWithoutAjax1_Login1_ButtonLoginSocial" style="display: none;"> <script>
+function FacebookLogin() {
+FB.login(function(response) {
+if (response.authResponse) {
+FB.api('/me', function(response) {
+try {
+$j('#ctl00_HeaderWithoutAjax1_Login1_HiddenFieldUserId').val(response.id.toString());
+$j('#ctl00_HeaderWithoutAjax1_Login1_HiddenFieldEmail').val(response.email.toString());
+$j('#ctl00_HeaderWithoutAjax1_Login1_HiddenFieldFirstName').val(response.first_name.toString());
+$j('#ctl00_HeaderWithoutAjax1_Login1_HiddenFieldLastName').val(response.last_name.toString());
+$j('#ctl00_HeaderWithoutAjax1_Login1_HiddenFieldType').val('facebook');
+$j('#ctl00_HeaderWithoutAjax1_Login1_ButtonLoginSocial').click();
+}
+catch (err) {
+alert($j('#HiddenErrorMessage').val());
+}
+});
+} else {
+console.log('User cancelled login or did not fully authorize.');
+}
+}, { scope: 'publish_actions, email' });
+}
+</script> <script>
+$j(document).ready(function() {
+function signinCallback(authResult) {
+if (authResult['status']['signed_in']) {
+try {
+gapi.client.load('plus', 'v1', function() {
+var request = gapi.client.plus.people.get({
+'userId': 'me'
+});
+request.execute(function(resp) {
+$j('#ctl00_HeaderWithoutAjax1_Login1_HiddenFieldEmail').val(resp.emails[0].value.toString());
+$j('#ctl00_HeaderWithoutAjax1_Login1_HiddenFieldFirstName').val(resp.name.givenName.toString());
+$j('#ctl00_HeaderWithoutAjax1_Login1_HiddenFieldLastName').val(resp.name.familyName.toString());
+$j('#ctl00_HeaderWithoutAjax1_Login1_HiddenFieldType').val('google');
+$j('#ctl00_HeaderWithoutAjax1_Login1_ButtonLoginSocial').click();
+});
+});
+}
+catch (err) {
+alert($j('#HiddenErrorMessage').val());
+}
+} else {
+console.log('Sign-in state: ' + authResult['error']);
+}
+}
+var additionalParams = {
+'callback': signinCallback
+};
+var signinButton = document.getElementById('googleLoginHeader');
+if (signinButton != null) {
+signinButton.addEventListener('click', function() {
+gapi.auth.signIn(additionalParams);
+console.log(gapi);
+});
+}
+});
+</script> <!-- PopUp Start--> <!-- PopUp End--> <div class="header"> <div class="topHeaderConainer" style="width: 100%; float: left;"> <script>
+$j(document).ready(function() {
+$j.getScript('/JQuery/ticker_21122013.js', function() {
+$j('#js-news').ticker();
+});
+});
+</script> <style type="text/css">
+.ticker
+{
+width: 538px;
+height: 30px;
+display: block;
+position: relative;
+overflow: hidden;
+}
+.ticker-title
+{
+padding-top: 9px;
+color: #900;
+font-weight: bold;
+text-transform: uppercase;
+}
+.ticker-content
+{
+margin: 0;
+padding-top: 9px;
+position: absolute;
+color: #1f527b;
+overflow: hidden;
+white-space: nowrap;
+line-height: 1.2em;
+}
+.ticker-content a:hover
+{
+text-decoration: none;
+color: #0d3059;
+}
+.ticker-swipe
+{
+padding-top: 9px;
+position: absolute;
+top: 0;
+background-color: #f60;
+display: block;
+width: 800px;
+height: 23px;
+}
+.ticker-swipe span
+{
+margin-left: 1px;
+border-bottom: 1px solid #fff;
+height: 14px;
+width: 7px;
+display: block;
+}
+.js-hidden
+{
+display: none;
+}
+.ticker-controls
+{
+padding: 8px 0 0 0;
+list-style-type: none;
+float: left;
+}
+.left .ticker-controls, .left .ticker-content, .left .ticker-title, .left .ticker
+{
+float: left;
+}
+</style> <div class="InFocusNews display_none" id="InFocus"> <div class="page" style="position: relative;"> <h2>
+In Focus</h2> <div class="rightNew" style="display: inline;"> <div id="ticker-wrapper-1434561145544" class="ticker-wrapper has-js left"><div id="ticker-1434561145544" class="ticker"><div id="ticker-title-1434561145544" class="ticker-title"><span></span></div><p id="ticker-content-1434561145544" class="ticker-content" style="display: block; opacity: 1; left: 0px;"><a href="http://www.c-sharpcorner.com/Events/159/webinar-getting-started-with-mvc-angularjs.aspx" style="color: White;" rel="nofollow">
+Webinar: Getting Started with MVC &amp; AngularJS</a></p><div id="ticker-swipe-1434561145544" class="ticker-swipe" style="left: 0px; margin-left: 160.9px;"><span style="display: block;"><!-- --></span></div></div><ul id="ticker-controls-1434561145544" class="ticker-controls"><li id="play-pause-1434561145544" class="jnt-play-pause controls"><a href=""><!-- --></a></li><li id="prev-1434561145544" class="jnt-prev controls"><a href=""><!-- --></a></li><li id="next-1434561145544" class="jnt-next controls"><a href=""><!-- --></a></li></ul></div> </div> </div> </div> <div class="display_none"> <div class="page"> <a href="http://www.c-sharpcorner.com/" id="ctl00_HeaderWithoutAjax1_Contribution1_LogoLink"> <span id="ctl00_HeaderWithoutAjax1_Contribution1_LogoImage" class="logo"></span> </a> <div class="headerBanner"> </div> <div id="ctl00_HeaderWithoutAjax1_Contribution1_ContributionLinks"> <div class="contributeList"> <a href="javascript:void(0);" class="contributeOnHeader">Contribute</a> <ul> <li> <a id="ctl00_HeaderWithoutAjax1_Contribution1_PostArticle" href="javascript:__doPostBack('ctl00$HeaderWithoutAjax1$Contribution1$PostArticle','')">An Article</a></li> <li> <a id="ctl00_HeaderWithoutAjax1_Contribution1_LinkButtonCodeSnippet" href="javascript:__doPostBack('ctl00$HeaderWithoutAjax1$Contribution1$LinkButtonCodeSnippet','')">A Code Snippet</a></li> <li> <a id="ctl00_HeaderWithoutAjax1_Contribution1_PostBlog" href="javascript:__doPostBack('ctl00$HeaderWithoutAjax1$Contribution1$PostBlog','')">A Blog</a></li> <li> <a id="ctl00_HeaderWithoutAjax1_Contribution1_PostNews" href="javascript:__doPostBack('ctl00$HeaderWithoutAjax1$Contribution1$PostNews','')">A News</a></li> <li> <a id="ctl00_HeaderWithoutAjax1_Contribution1_PostVideo" href="javascript:__doPostBack('ctl00$HeaderWithoutAjax1$Contribution1$PostVideo','')">A Video</a></li> <li> <a id="ctl00_HeaderWithoutAjax1_Contribution1_PostResource" href="javascript:__doPostBack('ctl00$HeaderWithoutAjax1$Contribution1$PostResource','')">A Link</a></li> <li> <a id="ctl00_HeaderWithoutAjax1_Contribution1_PostInterview" href="javascript:__doPostBack('ctl00$HeaderWithoutAjax1$Contribution1$PostInterview','')">An Interview Question</a></li> </ul> </div> <a id="ctl00_HeaderWithoutAjax1_Contribution1_PostForum" class="askQuestionOnHeader" href="javascript:__doPostBack('ctl00$HeaderWithoutAjax1$Contribution1$PostForum','')">Ask a Question</a> </div> </div> </div> <div id="ctl00_HeaderWithoutAjax1_HeaderMenu" class="HeadermenuStripBlue" style="position: fixed; top: 0px;"> <div class="page" style="position: relative;"> <div class="responsiveMenu" style="height: auto;"> <div class="SearchBox"> <div id="ctl00_HeaderWithoutAjax1_Panal1" onkeypress="javascript:return WebForm_FireDefaultButton(event, &#39;ctl00_HeaderWithoutAjax1_searchImageButton&#39;)"> <input name="ctl00$HeaderWithoutAjax1$searchTextBox" type="text" id="ctl00_HeaderWithoutAjax1_searchTextBox" class="searchTextBox" placeholder="C# Corner Search" style="font-family:Calibri;"> <input type="submit" name="ctl00$HeaderWithoutAjax1$searchImageButton" value="" id="ctl00_HeaderWithoutAjax1_searchImageButton" class="button"> </div> </div> <ul class="headerMenu"> <li class="display_none" style="background:none;"><a href="http://www.c-sharpcorner.com/" class="csharpHome" title="C# Corner Home">&nbsp;</a></li> <li class="first display_none"><a href="http://www.c-sharpcorner.com/pulse/" title="C# Corner Pulse" class="pulse"></a></li> <li><a href="http://www.c-sharpcorner.com/category/" class="show-dropdown menuLinkBlue">
+TECHNOLOGIES </a> <div class="dropDownMenu" id="dropDown" style="display: none;"> <div id="ctl00_HeaderWithoutAjax1_divTechnology" style="overflow: hidden; margin-bottom: 10px;"> <span id="ctl00_HeaderWithoutAjax1_DataListTechnologyTop"><span> <a href="http://www.c-sharpcorner.com/1/237/net-2015.aspx">
+.NET 2015
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/220/databases-dba.aspx">
+Databases &amp; DBA
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/236/jquery.aspx">
+JQuery
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/311/philosophy.aspx">
+Philosophy
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/296/visual-studio.aspx">
+Visual Studio
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/57/net-assemblies.aspx">
+.NET Assemblies
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/62/design-patterns-practices.aspx">
+Design Patterns &amp; Practices
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/300/knockout.aspx">
+Knockout
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/279/php.aspx">
+PHP
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/192/wcf.aspx">
+WCF
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/131/ado-net.aspx">
+ADO.NET
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/293/dynamics-crm.aspx">
+Dynamics CRM
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/278/leadership.aspx">
+Leadership
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/308/power-bi.aspx">
+Power BI
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/307/wearables.aspx">
+Wearables
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/176/ajax.aspx">
+AJAX
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/159/enterprise-development.aspx">
+Enterprise Development
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/186/learn-net.aspx">
+Learn .NET
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/283/products.aspx">
+Products
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/154/web-development.aspx">
+Web Development
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/56/algorithms-in-C-Sharp.aspx">
+Algorithms in C#
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/64/exception-handling.aspx">
+Exception Handling
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/180/linq.aspx">
+LINQ
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/198/project-management.aspx">
+Project Management
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/133/web-services.aspx">
+Web Services
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/247/android-programming.aspx">
+Android Programming
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/65/games-programming-C-Sharp.aspx">
+Games Programming C#
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/288/microsoft-office.aspx">
+Microsoft Office
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/322/python.aspx">
+Python
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/275/windows-10.aspx">
+Windows 10
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/302/angularjs.aspx">
+AngularJS
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/323/google-development.aspx">
+Google Development
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/245/microsoft-phone.aspx">
+Microsoft Phone
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/188/reports-using-C-Sharp.aspx">
+Reports using C#
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/77/windows-controls.aspx">
+Windows Controls
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/316/architecture.aspx">
+Architecture
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/294/graphics-design.aspx">
+Graphics Design
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/67/mobile.aspx">
+Mobile
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/183/sharepoint.aspx">
+SharePoint
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/76/windows-forms.aspx">
+Windows Forms
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/224/Asp-Net-programming.aspx">
+ASP.NET Programming
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/221/hardware.aspx">
+Hardware
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/149/multithreading.aspx">
+Multithreading
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/301/signalr.aspx">
+SignalR
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/243/windows-powershell.aspx">
+Windows PowerShell
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/232/azure.aspx">
+Azure
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/318/hololens.aspx">
+HoloLens
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/167/networking.aspx">
+Networking
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/210/silverlight.aspx">
+Silverlight
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/292/windows-server-2012.aspx">
+Windows Server 2012
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/309/business.aspx">
+Business
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/143/how-do-i.aspx">
+How do I 
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/304/node-js.aspx">
+Node.js
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/216/sql-language.aspx">
+SQL Language
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/78/windows-services.aspx">
+Windows Services
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/144/C-Sharp-programming.aspx">
+C# Programming
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/244/html-5.aspx">
+HTML 5
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/146/office-development.aspx">
+Office Development
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/297/sql-server.aspx">
+SQL Server
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/138/windows-store-apps.aspx">
+Windows Store Apps
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/282/c-cpp-mfc.aspx">
+C, C++, MFC
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/66/internet-web.aspx">
+Internet &amp; Web
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/208/oopood.aspx">
+OOP/OOD
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/312/startups.aspx">
+Startups
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/191/wpf.aspx">
+WPF
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/238/career-advice.aspx">
+Career Advice
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/320/internet-of-things.aspx">
+Internet of Things
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/276/open-source.aspx">
+Open Source
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/199/string-in-C-Sharp.aspx">
+String in C#
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/319/xamarin.aspx">
+Xamarin
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/280/chapters.aspx">
+Chapters
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/235/ios.aspx">
+iOS
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/222/operating-systems.aspx">
+Operating Systems
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/174/testing.aspx">
+Testing
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/190/xaml.aspx">
+XAML
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/68/coding-best-practices.aspx">
+Coding Best Practices
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/258/java.aspx">
+Java
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/299/oracle.aspx">
+Oracle
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/291/typescript.aspx">
+TypeScript
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/79/xml.aspx">
+XML
+</a> </span><br><span> <a href="http://www.c-sharpcorner.com/1/170/current-affairs.aspx">
+Current Affairs
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/233/javascript.aspx">
+JavaScript
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/315/outsourcing.aspx">
+Outsourcing
+</a> </span><span> <a href="http://www.c-sharpcorner.com/1/277/visual-basic-net.aspx">
+Visual Basic .NET
+</a> </span></span> </div> <div style="position: absolute; bottom: 0px; left: 0px;"> <a href="http://www.c-sharpcorner.com/ContactUs.aspx?type=7" class="LinkNormalBlue" style="color: #ff6600; background: none; text-transform: none; float: left;">Request
+a new Category</a><span style="float: left; color: #8D8D8D; margin-top: 4px;">|</span> <a href="http://www.c-sharpcorner.com/Category/" class="LinkNormalBlue viewAll" style="color: #36c; background: none!important; text-transform: none; float: left;">
+View All</a> </div> </div> </li> <li><a href="http://www.c-sharpcorner.com/forums/" title="Ask a Question">ANSWERS</a></li> <li><a href="http://www.c-sharpcorner.com/blogs/" title="Share a Blog">BLOGS</a></li> <li><a href="http://www.c-sharpcorner.com/videos/" title="Share a Video">VIDEOS</a></li><li> <a href="http://www.c-sharpcorner.com/interviews/" title="Ask an Interview Question">
+INTERVIEWS</a></li><li><a href="http://www.c-sharpcorner.com/ebooks/" title="Share a Book">
+BOOKS</a></li> <li><a href="http://www.c-sharpcorner.com/news/" title="Submit a News">NEWS</a></li> <li><a href="http://www.c-sharpcorner.com/chapters/" title="Attend an Event">
+CHAPTERS</a></li> <li><a href="http://www.c-sharpcorner.com/careerAdvice/" title="Get career advice">
+CAREER ADVICE</a></li> <li><a href="http://www.c-sharpcorner.com/jobs/" title="Get Jobs">Jobs</a></li> </ul> </div> </div> </div> </div> </div> </div> <script type="text/javascript" language="javascript">
+(function(d, t) {
+var g = d.createElement(t),
+s = d.getElementsByTagName(t)[0];
+g.src = '/JavaScripts/MindcrackerJScript.js';
+s.parentNode.insertBefore(g, s);
+} (document, 'script'));
+</script> <script type="text/javascript">
+$j(window).scroll(function() {
+var topS = $j(window).scrollTop();
+var winWidth = $j(window).width();
+var headerHe = $j(".topHeaderConainer").height() - $j(".HeadermenuStripBlue").height();
+// header js
+if (topS > headerHe) {
+if (parseInt(winWidth) < 767) {
+$j(".HeadermenuStripBlue").css("position", "relative");
+}
+else {
+$j(".HeadermenuStripBlue").css({ "position": "fixed", "top": 0 });
+}
+}
+else if (topS <= (headerHe + $j(".HeadermenuStripBlue").height())) {
+$j(".HeadermenuStripBlue").css("position", "relative");
+}
+});
+</script> <script type="text/javascript">
+// media query js
+$j(document).ready(function() {
+$j(window).resize(function() {
+if ($j(".menuButton").is(':visible')) {
+var windowHeight = $j(window).height();
+$j('.responsiveHeader .responsiveMenu').css("height", windowHeight);
+}
+else {
+$j('.responsiveHeader .responsiveMenu').css("height", 'auto');
+}
+});
+// responsive jquery 
+$j(".menuButton").click(function() {
+var windowHeight = $j(window).height();
+var menu_container = $j('.responsiveHeader .responsiveMenu');
+if (!menu_container.hasClass('hidden')) {
+menu_container.animate({ left: 0 });
+$j('body, .responsiveHeader').animate({ left: 260 + 'px' });
+menu_container.addClass('hidden');
+menu_container.css("height", windowHeight);
+$j('body').css({ 'height': windowHeight, 'overflow': 'hidden', 'position': 'fixed' });
+//$j('.SearchBox').animate({ left: 0 });
+} else {
+menu_container.animate({ left: -260 + 'px' });
+$j('body ,.responsiveHeader').animate({ left: 0 + 'px' });
+menu_container.removeClass('hidden');
+$j('body').css({ 'height': windowHeight, 'overflow-y': 'auto', 'position': 'relative' });
+//$j('.SearchBox').animate({ left: -260 + 'px' });
+}
+});
+});
+// add 'active' class to active menu
+var path = window.location.href.replace(/^https?:\/\//, '').split('/');
+var hostName = window.location.hostname;
+var activeCategory = hostName + '/' + path[1].toLowerCase();
+if (path[1].toLowerCase() === 'uploadfile') {
+var contentHeadingText = document.querySelector('div.article a.HeadingBold').textContent.trim() || document.querySelector('div.article a.HeadingBold').innerText.trim();
+activeCategory = hostName + '/' + contentHeadingText.toLowerCase();
+}
+else {
+if (path[1] === '1') {
+activeCategory = hostName + '/category';
+}
+}
+var activeMenuItem = document.querySelector('ul.headerMenu li a[href*="' + activeCategory + '"]');
+if (activeMenuItem !== null) {
+activeMenuItem.classList.add('active');
+}
+// ends here
+</script> <div class="page"> <div class="clear"> </div> <div class="main responsive_marginTop"> <div class="leftCntr"> <div class="trendingNowBox display_none_mobile"> <div class="left" id="example1_wrap"> <div class="bx_wrap"><a href="" class="prev"></a><a href="" class="next"></a><div class="bx_container" style="position: relative; width: 275px; overflow: hidden;"><ul id="example1" style="width: 999999px; position: relative; left: -275px;"><li style="float: left; list-style: none; margin-right: 0px;"><a href="http://www.c-sharpcorner.com/UploadFile/00a8b7/interview-questions-for-2-year-experience-in-sql-and-C-Sharp/" class="LinkNormalStyle" style="color: Gray;">
+Interview Questions For 2 Years Exp ...</a></li><li style="float: left; list-style: none; margin-right: 0px;"><a href="http://www.c-sharpcorner.com/UploadFile/219d4d/basics-of-javascript-part-5string-functions/" class="LinkNormalStyle" style="color: Gray;">
+Basics of JavaScript: Part 5 (Strin ...</a></li><li style="float: left; list-style: none; margin-right: 0px;"><a href="http://www.c-sharpcorner.com/UploadFile/219d4d/implement-search-paging-and-sort-in-mvc-5/" class="LinkNormalStyle" style="color: Gray;">
+Implement Search, Paging and Sort i ...</a></li></ul></div></div> </div> <div class="right"> <div id="ctl00_TrendingNow1_Panal1" onkeypress="javascript:return WebForm_FireDefaultButton(event, &#39;ctl00_TrendingNow1_searchImageButton&#39;)"> <input name="ctl00$TrendingNow1$searchTextBox" type="text" id="ctl00_TrendingNow1_searchTextBox" class="searchTextBox" placeholder="C# Corner Search" style="font-family:Calibri;"> <input type="submit" name="ctl00$TrendingNow1$searchImageButton" value="" id="ctl00_TrendingNow1_searchImageButton" class="button">  </div> </div> </div> <div class="article"> <div class="HeadingAr" id="div1"> <div class="floatRight marginTop"> <div id="ctl00_AuthorRank" class="AuthorRank"> <span id="ctl00_ImageReaderLevel" title="Beginner" class="sprite details beginner"></span>
+Reader Level:
+</div> </div> <span id="ctl00_spanArticle" class="floatLeft marginTop5"> <a href="http://www.c-sharpcorner.com/Articles/" id="ctl00_A1" class="HeadingBold grayHeading">
+Article</a> </span> </div> <div class="clear"> </div> <div class="image display_none_mobile"> <a href="http://www.c-sharpcorner.com/1/144/C-Sharp-programming.aspx" id="ctl00_AnchorAuthorImage"> <img id="ctl00_imgAuthor" title="C# Programming" class="image90" src="./Find nth element from last in a Linked List_files/072932AM.png" style="border-width:0px;"></a> </div> <div class="detail"> <div class="grayText"> <h1> <span id="ctl00_LabelArticleTitle" cssclass="BlogsWelcomeHeading">Find nth element from last in a Linked List</span> </h1> </div> <div class="LinkNormalGrayLight">
+By <span><a href="http://www.c-sharpcorner.com/authors/rawatgaurav/gaurav-rawat.aspx" id="ctl00_AuthorLink" class="LinkOrange">Gaurav Rawat</a></span>
+on
+<span id="ctl00_LabelDate">Jan 27, 2011</span> </div> <div class="LinkNormalGrayLight" style="display: none;"> <span style="color: Black;"></span><span id="ctl00_spanTags"><a class="LinkNormalGrayLight" href="http://www.c-sharpcorner.com/tags/linked-list">linked list</a>, <a class="LinkNormalGrayLight" href="http://www.c-sharpcorner.com/tags/nth-element-from-last-in-a-linked-list">nth element from last in a linked list</a>, <a class="LinkNormalGrayLight" href="http://www.c-sharpcorner.com/tags/"></a></span> </div> <div id="ctl00_DivDescription" class="normalGray">One very interesting problem is to find the nth element from the end in a linked list. Now it's very easy to find the nth element from the beginning of the list and can be done in one traverse. So what are the various solutions we can think of.</div> </div> <div class="clear"> </div> <div class="tweetIcon"> </div> </div> <div class="clear"> </div> <div> <span id="ctl00_LabelMessageBox" style="color:Red;"></span> </div> <div class="clear"> </div> <div class="clear"> </div> <div class="contentHeaderArticleIcons"> <ul class="right viewBar"> <li><a title="Views" class="newSpriteIcons like"><span class="point"><span id="ctl00_spanArticleViews">15<span class="unit">k</span></span></span></a></li> <li><a href="http://www.c-sharpcorner.com/uploadfile/rawatgaurav/find-nth-element-from-last-in-a-linked-list/#ReadAndPostComment" class="newSpriteIcons comments" title="Comments"><span class="point"><span id="spanComments">3</span></span></a></li> <li><a class="newSpriteIcons views" title="Like" onclick="Like();"><span><span class="point"> <span id="ctl00_LabelLikeCount">0</span></span></span></a></li> </ul> <ul class="leftIcons"> <li><a class="newSpriteIcons facebook" href="https://www.facebook.com/sharer.php?u=http%3a%2f%2fwww.c-sharpcorner.com%2fuploadfile%2frawatgaurav%2ffind-nth-element-from-last-in-a-linked-list%2fDefault.aspx" onclick="popupwindowAtCenter(this.href,&#39;Share on Facebook&#39;,600,600);return false;" target="_blank">facebook</a></li> <li><a class="newSpriteIcons twitter" href="https://twitter.com/intent/tweet?&url=http%3a%2f%2fwww.c-sharpcorner.com%2fuploadfile%2frawatgaurav%2ffind-nth-element-from-last-in-a-linked-list%2fDefault.aspx&via=CsharpCorner&related=CsharpCorner&text=Find+nth+element+from+last+in+a+Linked+List" target="_blank">twitter</a></li> <li><a class="newSpriteIcons linkedIn" href="https://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fwww.c-sharpcorner.com%2fuploadfile%2frawatgaurav%2ffind-nth-element-from-last-in-a-linked-list%2fDefault.aspx" onclick="popupwindowAtCenter(this.href,&#39;Share on LinkedIn&#39;,600,600);return false;" target="_blank">linkedIn</a></li> <li><a class="newSpriteIcons googlePlus" href="https://plus.google.com/share?url=http%3a%2f%2fwww.c-sharpcorner.com%2fuploadfile%2frawatgaurav%2ffind-nth-element-from-last-in-a-linked-list%2fDefault.aspx" onclick="popupwindowAtCenter(this.href,&#39;Share on Google+&#39;,600,600);return false;" target="_blank">google Plus</a></li> <li class="innerArticleIcons display_none_mobile"> <ul> <li> <a id="ctl00_ImageButtonEmail" title="Email this article to friend" class="newSpriteIcons email" href="javascript:__doPostBack('ctl00$ImageButtonEmail','')"></a></li> <li class="display_none"> <a id="ctl00_ImageButtonAddToMyBookmarks" title="Bookmark this article" class="newSpriteIcons bookmark" href="javascript:__doPostBack('ctl00$ImageButtonAddToMyBookmarks','')"></a> </li> <li class="display_none"><a href="javascript:void(GetPrintVersion())" id="ctl00_AnchorPrintArticle" title="Print" class="newSpriteIcons print"></a></li> <li><a href="http://www.c-sharpcorner.com/Authors/rawatgaurav/articles/" id="ctl00_AuthorsOtherArticles" title="Author&#39;s other article" class="newSpriteIcons author_other_article"></a> </li> <li><a href="http://www.c-sharpcorner.com/Articles/Default.aspx?ArticleId=e2e5ce94-8813-4840-904c-8f577bf10245" id="ctl00_AnchorSimilarArticles" title="Similar articles" class="newSpriteIcons similar_article"></a></li> <li class="display_none"> </li> <li class="display_none"> </li> <li> <a id="ctl00_ImageButtonHistory" title="Article History" class="newSpriteIcons article_history" href="javascript:__doPostBack('ctl00$ImageButtonHistory','')"></a> </li> <li class="display_none"> </li> <li class="display_none"> </li> <li class="display_none"> </li> <li class="display_none"> </li> <li class="display_none"> </li> </ul> </li> <li><a href="javascript:void(0);" class="newSpriteIcons expand display_none_mobile">
+expand</a></li> </ul> </div> <div class="clear"> </div> <div id="ctl00_downloadFiles" class="ratingTilte" style="margin-top:10px;margin-bottom:0px;display:none;">
+&nbsp;
+</div> <div id="div2" class="PaddingLeft5"><br><font size="2"><p align="justify"><br><font size="2" face="Verdana">One very interesting problem is to find the nth element from the end in a linked list. Now it's very easy to find the nth element from the beginning of the list and can be done in one traverse. So what are the various solutions we can think of.<br><br>One of the methods involves traversing the list once to find the length say the length is l.<br><br>Now we need to find the nth element from last that means (l-m)th element from head so we need to traverse the list once again until we reach (l-m)th element.<br><br>This method is good for small lists where the number of elements to be traversed are not large but if the number is large then there would be a problem since there would be twice the traversal.<br><br>Another method is to hold a pointer to a node which is m nodes ahead and traverse the list until <a href="http://www.watchesn.com/" alt="Replica watches" title="Replica watches" style="text-decoration:none; color:#000000;">the</a> node reaches last so the node which is m nodes behind is the desired node.<br><br>Lets define a simple Node class :<br><br><img border="0" alt="image1.gif" src="./Find nth element from last in a Linked List_files/image1.gif" width="191" height="138"><br><br>The code for this algorithm is below:<br><br><img border="0" alt="image2.gif" src="./Find nth element from last in a Linked List_files/image2.gif" width="488" height="281"><br><br>There is a one more solution in which we don't have to as much traversing as we had done above. This is a bit complicated but interesting. In it we traverse the list in rounds of n nodes and maintain a pointer to the node which is beginning of the node which is m nodes behind the beginning of current node. e.g. if a list has 10 elements and the elements are 1-2-3-4-5-6-7-8-9-10 and we need to find the 4th element from last i.e. 7 we would proceed the list in a set of 4 elements so that when current reaches 5th node, pointer is at 1st node. When it reaches 9th node, the pointer is at 5th node. After 9th node we get to the last node in 2 turns so mth node will be 5+2 i.e. 7th node. The code to implement this is as follows :<br><br></font></p><div><font size="2" face="Verdana"><img border="0" alt="image3.gif" src="./Find nth element from last in a Linked List_files/image3.gif" width="504" height="485"><br></font> </div><div><font class="Apple-style-span" size="2"><br></font></div> <p></p></font></div>erver'&gt; <div class="clear"> </div> <div class="clear"> </div> <div class="auther_bio"> <a href="http://www.c-sharpcorner.com/authors/rawatgaurav/gaurav-rawat.aspx" id="ctl00_AboutAuthor1_AuthorImageAnchor" class="image"> <img src="./Find nth element from last in a Linked List_files/rawatgaurav.jpg" id="ctl00_AboutAuthor1_AuthorImage"></a> <div class="autherDetail"> <a href="http://www.c-sharpcorner.com/authors/rawatgaurav/gaurav-rawat.aspx" id="ctl00_AboutAuthor1_AuthorName" class="userName">Gaurav Rawat</a> <p id="ctl00_AboutAuthor1_Description" class="description">I had started this blog to know more about intricacies of C# language. I hope to build a good repository of articles dedicated to algorithms,object oriented designing and software best practices.</p> <ul class="social"> <li class="twitter"><a id="ctl00_AboutAuthor1_TwitterFollow" title="Not Set" class="notSet">Follow</a></li> <li class="facebook"><a id="ctl00_AboutAuthor1_FacebookProfileUrl" title="Not Set" class="notSet">Facebook</a></li> <li class="linkedIn"><a id="ctl00_AboutAuthor1_LinkedInProfileUrl" title="Not Set" class="notSet">LinkedIn</a></li> <li class="message"> <a id="ctl00_AboutAuthor1_SendMessageImageButton" title="Send Message" href="javascript:__doPostBack('ctl00$AboutAuthor1$SendMessageImageButton','')">message</a></li> </ul> </div> <div class="clear"> </div> <div class="autherIcons"> <ul> <li class="li_1"><a href="http://www.c-sharpcorner.com/Members/rank/"><span class="rank"> </span><span class="text">rank</span><span id="ctl00_AboutAuthor1_Rank" class="count">556</span></a> </li> <li class="li_2"><a href="http://www.c-sharpcorner.com/Articles/AuthorTopArticles.aspx?authorid=rawatgaurav"> <span class="reader"></span><span id="ctl00_AboutAuthor1_Readers" class="count">69.7k</span> <span class="text">readers</span> </a></li> <li class="li_4"><span id="ctl00_AboutAuthor1_Medal" class="medal Starter" title="Starter Member"></span><span id="ctl00_AboutAuthor1_MedalText" class="count Starter">Starter</span><span class="text">Member</span></li> <li id="ctl00_AboutAuthor1_CSharpMVP" class="li_3 notSet" title="C# Corner MVP - Not awarded yet."><a href="http://www.c-sharpcorner.com/Members/mvps/"> <span class="csharpmvp"></span><span id="ctl00_AboutAuthor1_MVP" class="count"></span> <span class="text">
+times</span> </a></li> </ul> </div> </div> <div class="clear"> </div> <div id="ctl00_RelatedArticles" class="relatedArticle"> <h3>
+Related Articles
+</h3> <ul> <li><span class="bullet"></span> <a id="ctl00_RepeaterSimilarArticles_ctl00_HyperLinkTitle" href="http://www.c-sharpcorner.com/UploadFile/mahesh/how-to-get-last-index-of-an-item-in-a-C-Sharp-list/">How to get last index of an item in a C# List</a> </li> <li><span class="bullet"></span> <a id="ctl00_RepeaterSimilarArticles_ctl01_HyperLinkTitle" href="http://www.c-sharpcorner.com/UploadFile/e83792/how-to-select-nth-highest-salary-with-the-help-of-stored-pro/">Find The Nth Highest Salary Using Stored Procedure in ASP.NET</a> </li> <li><span class="bullet"></span> <a id="ctl00_RepeaterSimilarArticles_ctl02_HyperLinkTitle" href="http://www.c-sharpcorner.com/uploadfile/rawatgaurav/merging-two-sorted-linked-lists-in-C-Sharp/default.aspx">Merging two sorted linked lists in C#</a> </li> <li><span class="bullet"></span> <a id="ctl00_RepeaterSimilarArticles_ctl03_HyperLinkTitle" href="http://www.c-sharpcorner.com/UploadFile/jeradus/UsingLinkedListInCS11102005005525AM/UsingLinkedListInCS.aspx">Using Linked List in C#</a> </li> <li><span class="bullet"></span> <a id="ctl00_RepeaterSimilarArticles_ctl04_HyperLinkTitle" href="http://www.c-sharpcorner.com/UploadFile/c25b6d/working-with-list-and-operation-performed-in-list/">Working With List&lt;&gt; and Operations Performed in List&lt;&gt;</a> </li> <li><span class="bullet"></span> <a id="ctl00_RepeaterSimilarArticles_ctl05_HyperLinkTitle" href="http://www.c-sharpcorner.com/uploadfile/dhananjaycoder/inserting-element-in-sorted-generic-list-listt-using-binary-search/default.aspx">Inserting element in sorted Generic list (List<t>) using binary search</t></a> </li> <li><span class="bullet"></span> <a id="ctl00_RepeaterSimilarArticles_ctl06_HyperLinkTitle" href="http://www.c-sharpcorner.com/UploadFile/suba.venkat/sql-profiler-inputbuffer-events-in-sql-server/">SQL Profiler InputBuffer Events in SQL Server</a> </li> <li><span class="bullet"></span> <a id="ctl00_RepeaterSimilarArticles_ctl07_HyperLinkTitle" href="http://www.c-sharpcorner.com/uploadfile/667ddf/select-tag-in-html5/default.aspx">Select Tag in HTML5</a> </li> <li><span class="bullet"></span> <a id="ctl00_RepeaterSimilarArticles_ctl08_HyperLinkTitle" href="http://www.c-sharpcorner.com/UploadFile/3d39b4/find-nth-highest-salary-in-sql-server/">Find Nth Highest Salary in SQL Server</a> </li> <li><span class="bullet"></span> <a id="ctl00_RepeaterSimilarArticles_ctl09_HyperLinkTitle" href="http://www.c-sharpcorner.com/UploadFile/mahesh/how-to-get-index-of-an-item-in-a-C-Sharp-list/">How to get Index of an item in a C# List</a> </li> </ul> </div> <script src="./Find nth element from last in a Linked List_files/jquery-Mention-Combined.js" type="text/javascript"></script> <script type="text/javascript">
+var mentionarraydata=[];
+var Comments_article = (function () {
+var pageSize = 10;
+var rootClass = '.article ';
+return {
+//Get Comments
+GetComments: function (parent_id) {
+var pageNumber = $j('#HiddenPageNumber_article').val();
+var rootComments = $j(rootClass + '#RootComments');
+var items = 0;
+$j.ajax({
+type: "POST",
+contentType: "application/json; charset=utf-8",
+url: "/WebServices/Comments.asmx/GetComments",
+data: "{'id':'e2e5ce94-8813-4840-904c-8f577bf10245','type':'article','pageNumber':'" + pageNumber + "', 'pageSize':'" + pageSize + "', 'parentId':" + parent_id + "}",
+async: false,
+beforeSend: function () {
+$j(rootClass + '#mainLoader').show();
+},
+success: function (d) {
+var data = d[0];
+var totalComments;
+$j.each(data, function (index) {
+rootComments.prepend(BuildComment(data[index])); //Prepend root comments
+if (pageNumber == 1 && index == 0) {
+$j(rootClass + '#HiddenTotalComments').val(data[index].TotalComments);
+if (d[2][index] == null || d[2][index] == undefined) {
+totalComments = data[index].TotalComments;
+}
+else {
+totalComments = parseFloat(data[index].TotalComments) + parseFloat(d[2][index].TotalComments);
+}
+$j(rootClass + '#TotalComments').text(totalComments); //set total comments only once.
+$j('#spanComments').text(totalComments); //Manages Header Comment Count
+}
+items = parseFloat(items) + 1; //track for number of comments to show
+ManageAlternateColor();
+});
+//Reply Binding starts here
+var reply = d[1];
+var element;
+$j.each(reply, function (index) {
+element = $j(rootClass + '#CommentReplies_' + reply[index].ParentId);
+element.prepend(BulildCommentReply(reply[index]));
+items = parseFloat(items) + 1;
+});
+//Reply Binding ends here
+//Manage paging
+{
+if (items != 0 && parseFloat(pageNumber) >= 1) {
+if (parseFloat(pageNumber) == 1)
+$j(rootClass + '#CommentCount').text(items);
+else
+$j(rootClass + '#CommentCount').text(parseFloat($j(rootClass + '#CommentCount').text()) + items);
+}
+else {
+$j(rootClass + '#Paging').hide();
+}
+ManageViewMoreVisibility();
+}
+$j(rootClass + '#mainLoader').hide();
+}
+});
+},
+//Like Comment
+LikeComment: function (id) {
+VerifyUser();
+var status;
+$j.ajax({
+url: "/Handlers/CommentsHandler.ashx?method=like_comment&id=" + id + "&type=article",
+type: "POST",
+async: false,
+beforeSend: function () {
+$j(rootClass + '#ajaxLoader_' + id).show(); //Show Ajax Loader
+},
+success: function (response) {
+status = response;
+$j(rootClass + '#ajaxLoader_' + id).hide(); //Hide Ajax Loader
+},
+Error: ShowError
+});
+if (status == '1') {
+var likes = $j(rootClass + '#Likes_' + id).text();
+$j(rootClass + '#Likes_' + id).text(parseFloat(likes) + 1);
+}
+else if (status == '2') {
+}
+},
+//Delete Comment
+DeleteComment: function (id, parent_id) {
+VerifyUser();
+var status;
+$j.ajax({
+url: "/Handlers/CommentsHandler.ashx?method=delte_comment&id=" + id + "&type=article",
+type: "POST",
+async: false,
+success: function (response) {
+status = response;
+},
+Error: ShowError
+});
+if (status == '1') {
+var count = $j(rootClass + '#Replies_' + id).text();
+$j(rootClass + '#comment_' + id).remove();
+if (parent_id == 0) {
+ManageAlternateColor();
+ManagePaging('d', count);
+if (GetParentCommentsCount() == 0)
+Comments_article.GetComments(0);
+}
+else {
+var replies = $j(rootClass + '#Replies_' + parent_id).text();
+var totalComments = $j(rootClass + '#TotalComments');
+var commentCount = $j(rootClass + '#CommentCount');
+$j(rootClass + '#Replies_' + parent_id).text(parseFloat(replies) - 1);
+totalComments.text(parseFloat(totalComments.text()) - 1);
+commentCount.text(parseFloat(GetParentCommentsCount()) + parseFloat(GetChildCommentsCount()));
+$j('#spanComments').text(totalComments.text()); //Manages Header Comment Count
+}
+}
+},
+//Post Comment
+PostComment: function (parent_id, e) {
+if (e.keyCode == 13) {
+var rootComments = $j(rootClass + '#RootComments');
+var totalComments = $j(rootClass + '#HiddenTotalComments');
+var commentCount = $j(rootClass + '#CommentCount');
+var comment = null;
+$j('textarea.mention').mentionsInput('val', function(text) {
+comment=text;
+});
+comment=FormatText(comment);
+comment=GetCommentData(comment,'textarea.mention');
+if (comment != '') {
+VerifyUser();
+$j.ajax({
+url: "/WebServices/Comments.asmx/InsertComment",
+data: "{'user_id':'','content_id':'e2e5ce94-8813-4840-904c-8f577bf10245','type':'article','parent_id':'" + parent_id + "', 'description':'" + comment + "'}",
+type: "POST",
+contentType: "application/json; charset=utf-8",
+async: false,
+beforeSend: function () {
+$j(rootClass + '#PostLoader').show(); //Show Ajax Loader
+},
+success: function (response) {
+var data = response[0];
+var mailtosendids=[];
+var mailtobesendids=null;
+$j('textarea.mention').mentionsInput('getMentions', function(data) {
+$j.each(data, function(idx, obj) {
+mailtosendids.push(obj.id);
+});
+});
+$j('textarea.mention').mentionsInput('reset', function(data) {
+});                          
+rootComments.append(BuildComment(data));
+ManageAlternateColor();
+$j(rootClass + '#InputCommentText_' + parent_id).val('').trigger('autosize.resize');
+//if (!(parseFloat(totalComments.val()) == parseFloat(commentCount.text()) && parseFloat($j('#HiddenPageNumber_article').val()) > 1))
+if (parseFloat(GetParentCommentsCount()) > parseFloat(pageSize))
+rootComments.find('div').first().remove();
+ManagePaging('i', 0);
+SendMail(comment, '0', data.ParentUserId, data.CommentId);
+if(mailtosendids.length > 0)
+{
+mailtobesendids=mailtosendids.join(",");
+SendNotification(comment,mailtobesendids)
+}
+$j(rootClass + '#PostLoader').hide(); //Hide Ajax Loader
+PreventDefault(e);
+},
+Error: ShowError
+});
+}
+else { PreventDefault(e); }
+}
+},
+//Show Reply TextBox
+ShowReplyBox: function (id) {
+var element = $j(rootClass + '#CommentReplies_' + id);
+if ($j(rootClass + '#CommentReplies_' + id + ' #ReplyContainer_' + id).length)
+{ $j(rootClass + '#CommentReplies_' + id + ' #ReplyContainer_' + id).toggle(); }
+else {
+var postReply = '<div id="ReplyContainer_' + id + '" class="ReplyComment" style="padding-bottom:5px;">\
+<div class="image level1"><img src="http://www.c-sharpcorner.com/UploadFile/AuthorImage/DefaultAuthorImage.gif" alt=""></div>\
+<div class="commentcontent">\
+<textarea id="ReplyComment_' + id + '" onkeypress="Comments_article.PostCommentReply(' + id + ',event);" class="mention" style="height:18px;" spellcheck="true" placeholder="Type your comment here and press Enter Key...."></textarea>\
+</div>\
+<img id="PostLoader_' + id + '" src="/Images/csharp/ajax-loader_12x9.gif"\
+style="margin: 5px 7px 0px 0px; clear:both; float:right; display:none;" />\
+</div>';
+element.append(postReply);
+$j(rootClass + 'textarea#ReplyComment_' + id).elastic();
+GetValueAtTheRate(rootClass + 'textarea#ReplyComment_' + id);
+$j(rootClass + '#ReplyComment_' + id).focus();
+}
+$j(rootClass + '#CommentReplies_' + id).show();
+},
+//Show Replies
+ShowReplies: function (id, anchr) {
+var element = $j(rootClass + '#CommentReplies_' + id);
+var commentCount = $j(rootClass + '#CommentCount');
+//if (element.is(":visible") &&  == '')
+var pageSize = 50;
+if ($j(rootClass + '#Replies_' + id).text() != '0') {
+$j.ajax({
+type: "POST",
+contentType: "application/json; charset=utf-8",
+url: "/WebServices/Comments.asmx/GetComments",
+data: "{'id':'e2e5ce94-8813-4840-904c-8f577bf10245','type':'article','pageNumber':'1', 'pageSize':'" + pageSize + "', 'parentId':" + id + "}",
+beforeSend: function () {
+$j(rootClass + '#ajaxLoader_' + id).show(); //Show Ajax Loader
+},
+success: function (d) {
+element.html('');
+var data = d[0];
+$j.each(data, function (index) {
+data[index].CommentId;
+element.prepend(BulildCommentReply(data[index])); //Prepend root comments
+});
+$j(rootClass + '#ajaxLoader_' + id).hide(); //Hide Ajax Loader
+$j(anchr).remove();
+$j('#CommentReplies_' + id).show();
+commentCount.text(parseFloat(GetParentCommentsCount()) + parseFloat(GetChildCommentsCount()));
+}
+});
+}
+},
+//Expend/Collapse Comment Replies
+ToggleReplies: function (id) {
+$j(rootClass + '#CommentReplies_' + id).toggle();
+},
+//Post Comment Reply
+PostCommentReply: function (parent_id, e) {
+if (e.keyCode == 13) {
+var replyContainer = $j(rootClass + '#ReplyContainer_' + parent_id);
+//var comment = FormatText($j(rootClass + '#ReplyComment_' + parent_id).val());
+var totalComments = $j(rootClass + '#TotalComments');
+var commentCount = $j(rootClass + '#CommentCount');
+var comment=null;
+$j(rootClass + '#ReplyComment_' + parent_id).mentionsInput('val', function(text) {
+comment=text;
+});
+comment =FormatText(comment);
+comment=GetCommentData(comment,rootClass + '#ReplyComment_' + parent_id);
+$j(rootClass +'#ReplyComment_' + parent_id).mentionsInput('reset', function(data) {
+});
+if (comment != '') {
+VerifyUser();
+$j.ajax({
+url: "/WebServices/Comments.asmx/InsertComment",
+data: "{'user_id':'','content_id':'e2e5ce94-8813-4840-904c-8f577bf10245','type':'article','parent_id':'" + parent_id + "', 'description':'" + comment + "'}",
+type: "POST",
+contentType: "application/json; charset=utf-8",
+async: false,
+beforeSend: function () {
+$j(rootClass + '#PostLoader_' + parent_id).show(); //Show Ajax Loader
+},
+success: function (response) {
+var data = response[0];
+replyContainer.before(BulildCommentReply(data));
+$j(rootClass + '#ReplyComment_' + parent_id).val('').trigger('autosize.resize');
+var replies = $j(rootClass + '#Replies_' + parent_id).text();
+$j(rootClass + '#Replies_' + parent_id).text(parseFloat(replies) + 1);
+totalComments.text(parseFloat(totalComments.text()) + 1);
+commentCount.text(parseFloat(GetParentCommentsCount()) + parseFloat(GetChildCommentsCount()));
+$j('#spanComments').text(totalComments.text()); //Manages Header Comment Count
+SendMail(comment, '1', data.ParentUserId, data.CommentId); //SendMail(comment, is_child_comment, parent_user_id)
+$j(rootClass + '#PostLoader_' + parent_id).hide(); //Hide Ajax Loader
+PreventDefault(e);
+},
+Error: ShowError
+});
+}
+else { PreventDefault(e); }
+}
+},
+//Show Edit Panel
+ShowEditView: function (commentId) {
+var content = $j(rootClass + '#comment_' + commentId + ' .commentcontent div:eq(0)');
+var editButton = $j(rootClass + '#comment_' + commentId + ' div:eq(0) .edit');
+var editView = '<textarea id="CommentToEdit_' + commentId + '" onkeypress="Comments_article.EditComment(' + commentId + ',event);" class="inputText" spellcheck="true"  ></textarea>\
+<img id="ajaxLoaderEdit_' + commentId + '" src=\'/Images/csharp/ajax-loader_12x9.gif\' style="margin:4px 0px 0px 5px; display:none;" />';
+editButton.hide().next().hide();
+content.after(editView);
+var edittext=content.html();
+var existingusers= edittext.match(/<a[^>]+>([^<]+)<\/a>/g);
+var hyperlink=null;
+var username=null;
+//var userid=null;
+//var pieces=null;
+if(existingusers)
+{
+for(var i=0;i<=existingusers.length-1;i++)
+{
+hyperlink= $j(existingusers[i]).attr('href');
+//pieces=hyperlink.split('/');
+//userid=pieces[pieces.length-2];
+username=existingusers[i].match(/<a[^>]+>([^<]+)<\/a>/)[1];           
+mentionarraydata.push(username+'/^g*~o0#g*^/'+hyperlink);
+edittext=edittext.replace(existingusers[i],username);
+}
+}
+$j(rootClass + '#CommentToEdit_' + commentId).val(edittext);
+$j(rootClass + '#CommentToEdit_' + commentId).focus();
+content.hide();
+$j(rootClass + 'textarea#CommentToEdit_' + commentId).elastic();
+},
+//Edit Comment
+EditComment: function (commentId, e) {
+if (e.keyCode == 13) {  
+var content = $j(rootClass + '#comment_' + commentId + ' .commentcontent div:eq(0)');
+var textBox = $j(rootClass + '#CommentToEdit_' + commentId);
+textBox.val(textBox.val().replace('\n', ''));
+var comment = $j(rootClass + '#CommentToEdit_' + commentId).val().trim();
+comment = FormatText(comment);
+comment=GetEditData(comment);                    
+if (comment == content.text() || comment == '') {
+RemoveEditView(commentId);
+PreventDefault(e);
+}
+else {
+VerifyUser();
+var status;
+$j.ajax({
+url: "/Handlers/CommentsHandler.ashx?method=edit_comment&id=" + commentId + "&type=article",
+type: "POST",
+async: false,
+data: { description: comment },
+beforeSend: function () {
+$j(rootClass + '#ajaxLoaderEdit_' + commentId).show(); //Show Ajax Loader
+},
+success: function (response) {
+status = response;
+PreventDefault(e);
+mentionarraydata.length=0;
+},
+Error: ShowError
+});
+if (status == '1') {
+content.html(decodeURIComponent(comment));
+RemoveEditView(commentId);
+}
+}
+}
+else if (e.keyCode == 27) {
+RemoveEditView(commentId);
+}
+},
+//Update Comment Follow Status
+UpdateFollowStatus: function (checkBox) {
+var status;
+status = ($j(checkBox).is(':checked'))?true:false;
+$j.ajax({
+url: "/Handlers/CommentsHandler.ashx?method=comment_follow_status&id=e2e5ce94-8813-4840-904c-8f577bf10245&type=article&status=" + status,
+type: "POST",
+async: false,
+beforeSend: function () {
+$j(rootClass + '#PostLoader').show(); //Show Ajax Loader
+},
+success: function (response) {
+if(response=='1')
+$j(rootClass + '#PostLoader').hide();
+},
+Error: ShowError
+});
+},
+//View Previous Comments
+ViewPreviousComments: function () {
+var pageNumber = $j('#HiddenPageNumber_article').val();
+var totalComment = $j(rootClass + '#HiddenTotalComments').val();
+if (parseFloat(totalComment) > (parseFloat(pageNumber) * pageSize)) {
+$j('#HiddenPageNumber_article').val(parseFloat(pageNumber) + 1);
+}
+else {
+$j(rootClass + '#RootComments').text('');
+$j('#HiddenPageNumber_article').val('1');
+}
+Comments_article.GetComments(0);
+},
+//Show editor options
+ShowEditorOptions: function (container,e) {
+$j(container).find('.pulseDelete:first').show();
+},
+//Hide editor options
+HideEditorOptions: function (container,e) {
+$j(container).find('.pulseDelete:first').hide();
+},
+//Show editor options
+ShowEditorOptionsReply: function (container,e) {
+$j(container).find('.pulseDeleteReply:first').show();
+$j(container).parents().eq(2).find('.pulseDelete').hide();
+e.stopPropagation();
+},
+//Hide editor options
+HideEditorOptionsReply: function (container,e) {
+$j(container).find('.pulseDeleteReply:first').hide();
+e.stopPropagation();
+}
+}// End of return
+function PreventDefault(e)//Function to prevent Default Events. Working in IE8
+{
+if (e.preventDefault)
+e.preventDefault();
+else
+e.returnValue = false;
+}
+function BuildComment(obj) {
+var authorUrl = obj.AuthorUrl;
+var desc=unescape(obj.Description);
+var commentHtml;
+commentHtml = '<div id="comment_' + obj.CommentId + '" class="pulsecomment" onmouseover="Comments_article.ShowEditorOptions(this,event);" onmouseout="Comments_article.HideEditorOptions(this,event);" >';
+if ('' == obj.UserId || '' == 'E' || '' == 'A') {
+commentHtml += '<div class="pulseDelete">';
+commentHtml += '<span onclick="Comments_article.ShowEditView(' + obj.CommentId + ')" title="Edit" class="sprite edit"></span>';
+if ('' == obj.UserId || '' == 'A')
+commentHtml += '<span onclick="Comments_article.DeleteComment(' + obj.CommentId + ',' + obj.ParentId + ')" title="Delete" class="sprite delete"></span>';
+commentHtml += '</div>';
+}
+commentHtml += '<div class="image level0"><a href="' + authorUrl + '"><img alt="" title="' + obj.FullName + '" src="' + obj.PhotoUrl + '" /></a></div>\
+<div class="commentcontent">\
+<div class="commentDescription"  >' + desc + '</div>\
+<div>\
+<a class="LinkRed" href="'  + authorUrl + '">' + obj.FullName + '</a>\
+<span class="floatRight responsive_Commenttime"  style="font-size: 11px;"><span class="watchICon"></span>' + obj.CreatedDate + '</span>\
+</div>\
+<div style="margin-top: 4px;">\
+<ul class="rpv"><li class="newSpriteIcons rank" title="Rank" ><span>'+obj.AuthorRank+'</span></li><li class="newSpriteIcons point" title="Points" ><span>'+obj.AuthorPoints+'</span></li><li class="newSpriteIcons views" title="Total Views" ><span>'+obj.AuthorReadCount+'</span></li></ul>\
+<div class="floatRight pulseAction">\
+<img id="ajaxLoader_' + obj.CommentId + '" src=\'/Images/csharp/ajax-loader_12x9.gif\' style="margin:4px 0px 0px 5px; display:none;" />\
+<a class="newSpriteIcons like" onclick="Comments_article.LikeComment(' + obj.CommentId + ')"><span id="Likes_' + obj.CommentId + '">' + obj.Likes + '</span> </a>\
+<a class="newSpriteIcons reply" onclick="Comments_article.ToggleReplies(' + obj.CommentId + ')" ><span id="Replies_' + obj.CommentId + '">' + obj.Replies + '</span> </a>';
+if ('True' == 'True')
+commentHtml += '<a class="newSpriteIcons postReply" onclick="Comments_article.ShowReplyBox(' + obj.CommentId + ')">Post Reply</a>';
+if (parseFloat(obj.Replies) > 3)
+commentHtml += '<a class="newSpriteIcons showAll" onclick="Comments_article.ShowReplies(' + obj.CommentId + ', this)">Show All</a>';
+commentHtml += '</div>\
+</div>\
+<div class="clear"></div>\
+<div id="CommentReplies_' + obj.CommentId + '"></div>\
+</div>\
+</div>';
+return commentHtml;
+}
+function BulildCommentReply(obj) {
+var authorUrl = obj.AuthorUrl;
+var commentHtml = '<div id="comment_' + obj.CommentId + '" class="ReplyComment" onmouseover="Comments_article.ShowEditorOptionsReply(this,event);" onmouseout="Comments_article.HideEditorOptionsReply(this,event);" >';
+if ('' == obj.UserId || '' == 'E' || '' == 'A') {
+commentHtml += '<div class="pulseDeleteReply">';
+commentHtml += '<span onclick="Comments_article.ShowEditView(' + obj.CommentId + ')" title="Edit" class="sprite edit"></span>';
+if ('' == obj.UserId || '' == 'A')
+commentHtml += '<span onclick="Comments_article.DeleteComment(' + obj.CommentId + ',' + obj.ParentId + ')" title="Delete" class="sprite delete"></span>';
+commentHtml += '</div>';
+}
+commentHtml += '<div class="image level1"><a href="' + authorUrl + '"><img title="' + obj.FullName + '" src="' + obj.PhotoUrl + '" alt="" /></a></div>\
+<div class="commentcontent">\
+<div class="commentDescription" >' + unescape(obj.Description) + '</div>\
+<div>\
+<a href="' + authorUrl + '" class="LinkRed">' + obj.FullName + '</a>\
+<span class="floatRight responsive_Commenttime"  style="font-size: 11px;"><span class="watchICon"></span>' + obj.CreatedDate + '</span>\
+</div>\
+<div style="margin-top: 4px;">\
+<ul class="rpv"><li class="newSpriteIcons rank" title="Rank" ><span>'+obj.AuthorRank+'</span></li><li class="newSpriteIcons point" title="Points" ><span>'+obj.AuthorPoints+'</span></li><li class="newSpriteIcons views" title="Total Views" ><span>'+obj.AuthorReadCount+'</span></li></ul>\
+<div class="floatRight pulseAction">\
+<img id="ajaxLoader_' + obj.CommentId + '" src=\'/Images/csharp/ajax-loader_12x9.gif\' style="margin:4px 0px 0px 5px; display:none;" />\
+<a onclick="Comments_article.LikeComment(' + obj.CommentId + ')" class="newSpriteIcons like"> <span id="Likes_' + obj.CommentId + '">' + obj.Likes + '</span></a>\
+</div>\
+</div>\
+</div>';
+return commentHtml;
+}
+function GetParentCommentsCount() {
+var count = 0;
+//$j(rootClass + '#RootComments > div.pulsecomment').each(function () {
+//    count = count + 1;
+//});
+count = $j(rootClass + '#RootComments > div.pulsecomment').size();
+return count;
+}
+function GetChildCommentsCount() {
+var childNodes = $j(rootClass + '#RootComments > div.pulsecomment div.commentcontent div div.ReplyComment').size();
+var textareas = $j(rootClass + '#RootComments > div.pulsecomment div.commentcontent textarea').size();
+if (childNodes > 0)
+return childNodes - textareas;
+else return 0;
+}
+function ManageAlternateColor() {
+$j(rootClass + '#RootComments > div').removeClass("BackgroundWhite");
+$j(rootClass + '#RootComments > div:odd').addClass("BackgroundWhite");
+}
+//        function FormatTextToInsert(text) {
+//            return escape(($j.trim(text)).replace('<', '&lt;').replace('>', '&gt;').replace('/', '&#47;').replace('"', '&quot;').replace('\n', ''));
+//        }
+function SendMail(comment, is_child_comment, parent_user, commentId) {
+$j.ajax({
+url: "/Handlers/CommentsHandler.ashx?method=send_mail&type=article",
+data: { description: unescape(comment),
+content_title:'Find nth element from last in a Linked List',
+content_user_id:'rawatgaurav',
+is_child_comment:is_child_comment,
+content_id: 'e2e5ce94-8813-4840-904c-8f577bf10245',
+parent_user_id: parent_user,
+request_url:'http://www.c-sharpcorner.com/uploadfile/rawatgaurav/find-nth-element-from-last-in-a-linked-list/Default.aspx',
+content_url:'',
+content_user_email:'',
+comment_id:commentId
+},
+type: "POST",
+async: false,
+success: function (response) {
+}
+});
+}
+function SendNotification(comment,mailtosendids)
+{
+var pathname = 'http://www.c-sharpcorner.com/uploadfile/rawatgaurav/find-nth-element-from-last-in-a-linked-list/Default.aspx';
+$j.ajax({
+url: "/Handlers/CommentsHandler.ashx?method=send_notification&type=article",
+data: { description: unescape(comment),
+mailtosend:mailtosendids,
+currenturl:pathname
+},
+type: "POST",
+async: false,
+success: function (response) {
+}
+});
+}
+function VerifyUser() {
+var data;
+$j.ajax({
+url: "/Handlers/CommentsHandler.ashx?method=current_user",
+type: "GET",
+async: false,
+success: function (response) {
+data = $j.parseJSON(response)[0].user_name;
+}
+});
+if (data == null || data == '') {
+var url = 'http://www.c-sharpcorner.com/UserRegistration/Logincheck.aspx?ReturnURL=/uploadfile/rawatgaurav/find-nth-element-from-last-in-a-linked-list/Default.aspx';
+window.location = url;
+}
+}
+function ManagePaging(action, count) {
+var totalComments = $j(rootClass + '#TotalComments');
+var commentCount = $j(rootClass + '#CommentCount');
+var total_comments = $j.trim($j(rootClass + '#HiddenTotalComments').val());
+switch (action) {
+case 'i': //increase
+total_comments = parseFloat(total_comments) + 1;
+if ($j.trim(totalComments.text()) == '')
+totalComments.text('1');
+else
+totalComments.text(parseFloat(totalComments.text()) + 1);
+$j(rootClass + '#Paging').show();
+break;
+case 'd': //decrease
+if (parseFloat(total_comments) <= 0) {
+totalComments.text('');
+commentCount.text('');
+$j(rootClass + '#Paging').hide();
+}
+else {
+totalComments.text(parseFloat(totalComments.text()) - (1 + parseFloat(count)));
+total_comments = parseFloat(total_comments) - 1;
+}
+break;
+}
+var parentComments = parseFloat(GetParentCommentsCount());
+commentCount.text(parentComments + parseFloat(GetChildCommentsCount()));
+$j(rootClass + '#HiddenTotalComments').val(total_comments);
+$j('#HiddenPageNumber_article').val(parseInt((parentComments - 1) / pageSize) + 1);
+ManageViewMoreVisibility();
+$j('#spanComments').text(totalComments.text()); //Manages Header Comment Count
+}
+function ManageViewMoreVisibility() {
+var previousComments = $j(rootClass + '#ViewPreviousComments');
+if (parseFloat($j(rootClass + '#HiddenTotalComments').val()) > parseFloat(GetParentCommentsCount()))
+previousComments.show();
+else
+previousComments.hide();
+}
+function RemoveEditView(commentId) {
+var content = $j(rootClass + '#comment_' + commentId + ' .commentcontent div:eq(0)');
+var editButton = $j(rootClass + '#comment_' + commentId + ' div:eq(0) .edit');
+var textBox = $j(rootClass + '#CommentToEdit_' + commentId);
+var ajaxLoader = $j(rootClass + '#ajaxLoaderEdit_' + commentId);
+editButton.show().next().show();
+textBox.val('');
+textBox.remove();
+ajaxLoader.remove();
+content.show();
+}
+function ShowError() {
+alert('There is some error processing your request');
+}
+}());
+$j(document).ready(function () {
+$j.ajaxSetup({ cache: false });
+if ('True' == 'False') {
+$j('#RootPostComment').remove();
+}
+Comments_article.GetComments(0);
+GetValueAtTheRate('textarea.mention');
+$j(document).on("click",function(event) {
+var classname = event.target.className;
+if(classname=== 'mention')
+{
+$j('.mentions-autocomplete-list').has('ul').show();
+}
+else
+{
+$j('.mentions-autocomplete-list').hide();
+}
+});
+//        $j('.commentcontent').not('.ReplyComment').mouseover(function(e){
+//          $j(this).prev().prev().show(); 
+//          e.stopPropagation();
+//        });
+//        
+//        $j('.commentcontent').mouseout(function(e){
+//          $j(this).prev().prev().hide(); 
+//          e.stopPropagation();
+//        });
+//        $j('.pulsecomment').not('.commentcontent .ReplyComment').mouseover(function(e){
+//          $j(this).find('.pulseDelete').show(); 
+//          e.stopPropagation();
+//        });
+//        
+//        $j('.pulsecomment').mouseout(function(e){
+//          $j(this).find('.pulseDelete').hide(); 
+//          $j(this).find('.pulseDeleteReply').hide();
+//           e.stopPropagation();
+//        });
+//        
+//        $j('.pulsecomment .commentcontent .ReplyComment').mouseover(function(e){
+//         $j(this).find('.pulseDeleteReply').show();  
+//         $j('.pulseDelete').hide(); 
+//         e.stopPropagation();
+//        });
+});    
+function GetValueAtTheRate(id) {
+$j(id).mentionsInput({
+minChars:1,
+onDataRequest:function (mode, query, callback) {
+$j.ajax({
+type: "POST",
+contentType: "application/json; charset=utf-8",
+url: "/WebServices/CSharpSearch.asmx/GetAllFriendsFollowers",
+data: "{'name':'"+query+"','user_id':'','content_id':'e2e5ce94-8813-4840-904c-8f577bf10245','type':'article'}",
+async:false,
+success: function(data) {
+var jasondata= [];
+var Id=null,Name=null,Avatar=null,Type=null;
+for(var i=0;i<=data.length-1;i++)
+{
+Id= data[i].Id
+Name= data[i].Name;
+Avatar=data[i].PhotoUrl;
+Type=data[i].AuthorUrl;
+var jasonobj= new JasonObj(Id,Name,Avatar,Type);
+jasondata.push(jasonobj);
+}
+//jasondata = _.filter(jasondata, function(item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
+callback.call(this, jasondata);
+}
+});
+}
+});
+}
+var JasonObj =function(Id, Name, Avatar,Type){
+this.id = Id;
+this.name = Name;
+this.avatar= Avatar;
+this.type = Type;
+};
+function GetCommentData(comment,id)
+{
+var value=null;
+var valuetobereplaced=null; 
+var userURL=null;
+$j(id).mentionsInput('getMentions', function(data) {
+$j.each(data, function(idx, obj) {
+value = '@['+obj.value+']('+obj.type+':'+obj.id+')';
+valuetobereplaced=FormatText(value);
+userURL= '<a target=_blank class=LinkNormalBlue href='+decodeURIComponent(obj.type)+'>'+obj.value+'</a>';
+comment=comment.replace(valuetobereplaced, userURL);
+});
+});
+return comment;            
+}
+function FormatText(text) {
+return escape(($j.trim(text)).replace(/\</g, '&lt;').replace(/\>/g, '&gt;').replace('/', '&#47;').replace('"', '&quot;').replace('\n', '').replace('\\', '&#92;'));
+}  
+function GetEditData(comment) {
+comment = unescape(comment);
+if (mentionarraydata) {
+var username = null;
+var userlink = null;
+for (var i = 0; i <= mentionarraydata.length - 1; i++) {
+username = mentionarraydata[i].split('/^g*~o0#g*^/')[0];
+userlink = mentionarraydata[i].split('/^g*~o0#g*^/')[1];
+if (comment.indexOf(username) !== -1) {
+comment = comment.replace(username, '<a target=_blank class=LinkNormalGray href=' + userlink + '>' + username + '</a>')
+}
+}
+mentionarraydata.length = 0;
+}
+return escape(comment);
+}
+</script> <div class="clear"> </div> <div style="position: relative;" class="article"> <a name="ReadAndPostComment"></a> <div class="commentHeader"> <h2 class="headerControls">
+comments</h2> <img id="mainLoader" src="./Find nth element from last in a Linked List_files/ajax-loader_12x9.gif" style="position: absolute; left: 315px; top: 26px; display: none;"> <div id="Paging" class="commentPaging"> <div class="commentpage"> <label id="TotalComments" class="floatRight" style="margin-right: 3px;">3</label> <label class="floatRight" style="margin-right: 3px;">
+of
+</label> <label id="CommentCount" class="floatRight" style="margin-right: 3px;">3</label> <input id="HiddenPageNumber_article" type="hidden" value="1"> <input id="HiddenTotalComments" type="hidden" value="2"> </div> <a id="ViewPreviousComments" class="previousComments" style="display: none;" onclick="Comments_article.ViewPreviousComments();return false;">
+View Previous Comments &gt;&gt;</a> </div> </div> <div class="clear"> </div> <div id="ctl00_Comments1_Panel1" class="pulseMainComment" onkeypress="javascript:return WebForm_FireDefaultButton(event, &#39;ctl00_Comments1_Button1&#39;)"> <div class="pulseCommentSectionMain" style="padding: 0px; overflow: inherit"> <div class="pulseCommentSection"> <div id="RootComments"><div id="comment_17328" class="pulsecomment" onmouseover="Comments_article.ShowEditorOptions(this,event);" onmouseout="Comments_article.HideEditorOptions(this,event);"><div class="image level0"><a href="http://www.c-sharpcorner.com/authors/SamTomato/sam-hobbs.aspx"><img alt="" title="Sam Hobbs" src="./Find nth element from last in a Linked List_files/SamTomato.jpg"></a></div><div class="commentcontent"><div class="commentDescription">When the requirement is to access items by position, the ideal solution of course is to use an array. Another possibility is to use a doubly-linked list; in other words, a list that supports both forward and backward traversal. In situations in which a list must be used that only has forward pointers, it would be possible to create another list or an array that could be re-used.</div><div><a class="LinkRed" href="http://www.c-sharpcorner.com/authors/SamTomato/sam-hobbs.aspx">Sam Hobbs</a><span class="floatRight responsive_Commenttime" style="font-size: 11px;"><span class="watchICon"></span>Jan 27, 2011</span></div><div style="margin-top: 4px;"><ul class="rpv"><li class="newSpriteIcons rank" title="Rank"><span>9</span></li><li class="newSpriteIcons point" title="Points"><span>9.4k</span></li><li class="newSpriteIcons views" title="Total Views"><span>680.8k</span></li></ul><div class="floatRight pulseAction"><img id="ajaxLoader_17328" src="./Find nth element from last in a Linked List_files/ajax-loader_12x9.gif" style="margin:4px 0px 0px 5px; display:none;"><a class="newSpriteIcons like" onclick="Comments_article.LikeComment(17328)"><span id="Likes_17328">0</span> </a><a class="newSpriteIcons reply" onclick="Comments_article.ToggleReplies(17328)"><span id="Replies_17328">0</span> </a><a class="newSpriteIcons postReply" onclick="Comments_article.ShowReplyBox(17328)">Post Reply</a></div></div><div class="clear"></div><div id="CommentReplies_17328"><div id="comment_17330" class="ReplyComment" onmouseover="Comments_article.ShowEditorOptionsReply(this,event);" onmouseout="Comments_article.HideEditorOptionsReply(this,event);"><div class="image level1"><a href="http://www.c-sharpcorner.com/authors/rawatgaurav/gaurav-rawat.aspx"><img title="Gaurav Rawat" src="./Find nth element from last in a Linked List_files/rawatgaurav.jpg" alt=""></a></div><div class="commentcontent"><div class="commentDescription">Thanks Sam for other alternatives. Off course there could be many  more solutions to the problem. My idea was to show how can this be done in a singly linked list.With a doubly linked list and an array we don't have to write so much code.The whole idea was to show can pointer iteration be shown in C#.</div><div><a href="http://www.c-sharpcorner.com/authors/rawatgaurav/gaurav-rawat.aspx" class="LinkRed">Gaurav Rawat</a><span class="floatRight responsive_Commenttime" style="font-size: 11px;"><span class="watchICon"></span>Jan 27, 2011</span></div><div style="margin-top: 4px;"><ul class="rpv"><li class="newSpriteIcons rank" title="Rank"><span>556</span></li><li class="newSpriteIcons point" title="Points"><span>87</span></li><li class="newSpriteIcons views" title="Total Views"><span>69.7k</span></li></ul><div class="floatRight pulseAction"><img id="ajaxLoader_17330" src="./Find nth element from last in a Linked List_files/ajax-loader_12x9.gif" style="margin:4px 0px 0px 5px; display:none;"><a onclick="Comments_article.LikeComment(17330)" class="newSpriteIcons like"> <span id="Likes_17330">0</span></a></div></div></div></div></div></div></div><div id="comment_29856" class="pulsecomment BackgroundWhite" onmouseover="Comments_article.ShowEditorOptions(this,event);" onmouseout="Comments_article.HideEditorOptions(this,event);"><div class="image level0"><a href="http://www.c-sharpcorner.com/authors/7ddbb8/ritambhara-tech.aspx"><img alt="" title="Ritambhara Tech" src="./Find nth element from last in a Linked List_files/DefaultAuthorImage.gif"></a></div><div class="commentcontent"><div class="commentDescription">A generic solution for "K'th Node from end" is 
+http://www.ritambhara.in/kth-node-from-end/</div><div><a class="LinkRed" href="http://www.c-sharpcorner.com/authors/7ddbb8/ritambhara-tech.aspx">Ritambhara Tech</a><span class="floatRight responsive_Commenttime" style="font-size: 11px;"><span class="watchICon"></span>Sep 05, 2012</span></div><div style="margin-top: 4px;"><ul class="rpv"><li class="newSpriteIcons rank" title="Rank"><span>639</span></li><li class="newSpriteIcons point" title="Points"><span>4</span></li><li class="newSpriteIcons views" title="Total Views"><span>0</span></li></ul><div class="floatRight pulseAction"><img id="ajaxLoader_29856" src="./Find nth element from last in a Linked List_files/ajax-loader_12x9.gif" style="margin:4px 0px 0px 5px; display:none;"><a class="newSpriteIcons like" onclick="Comments_article.LikeComment(29856)"><span id="Likes_29856">0</span> </a><a class="newSpriteIcons reply" onclick="Comments_article.ToggleReplies(29856)"><span id="Replies_29856">0</span> </a><a class="newSpriteIcons postReply" onclick="Comments_article.ShowReplyBox(29856)">Post Reply</a></div></div><div class="clear"></div><div id="CommentReplies_29856"></div></div></div> </div> <div class="pulsecomment borderNone" id="RootPostComment" style="min-height: 42px;"> <div class="image level0"> <img src="./Find nth element from last in a Linked List_files/DefaultAuthorImage.gif" alt=""> </div> <div id="ctl00_Comments1_PanelPostComment" class="commentcontentPost" onkeypress="javascript:return WebForm_FireDefaultButton(event, &#39;ctl00_Comments1_ButtonPost&#39;)"> <div class="mentions-input-box"><div class="mentions"><div></div></div><textarea id="InputCommentText_0" style="height: 35px; overflow: hidden;" onkeypress="Comments_article.PostComment(&#39;0&#39;,event);" class="mention" spellcheck="true" placeholder="Type your comment here and press Enter Key...." data-mentions-input="true"></textarea><div style="position: absolute; display: none; word-wrap: break-word; white-space: pre-wrap; border: 1px solid rgb(220, 220, 220); font-weight: normal; width: 574px; font-family: pt_sansregular; line-height: normal; font-size: 14px; padding: 5px;">&nbsp;</div><div class="mentions-autocomplete-list"></div></div> <input type="submit" name="ctl00$Comments1$ButtonPost" value="" id="ctl00_Comments1_ButtonPost" style="display: none;"> </div> <img id="PostLoader" src="./Find nth element from last in a Linked List_files/ajax-loader_12x9.gif" style="clear: both; margin: 10px 5px 0px 0px; float: right; display: none;"> </div> </div> </div> <input type="submit" name="ctl00$Comments1$Button1" value="" onclick="return false;" id="ctl00_Comments1_Button1" style="display: none;"> <input type="hidden" name="ctl00$Comments1$HiddenFieldEmailComment" id="ctl00_Comments1_HiddenFieldEmailComment"> <input type="hidden" name="ctl00$Comments1$HiddenFieldIsChildComment" id="ctl00_Comments1_HiddenFieldIsChildComment"> <input type="hidden" name="ctl00$Comments1$HiddenFieldParentUserId" id="ctl00_Comments1_HiddenFieldParentUserId"> </div> <div class="clear"> </div> <div id="ctl00_Comments1_SocialComments" class="socialComments"> <div class="commentHeader"> <h2 class="headerControls floatLeft">
+COMMENT USING</h2> <span class="facebookComments" style="margin: 3px 5px;"></span> </div> <div class="fb-comments" data-href="http://www.c-sharpcorner.com/uploadfile/rawatgaurav/find-nth-element-from-last-in-a-linked-list/Default.aspx" data-width="675" data-num-posts="5"> </div> </div> </div> <div> </div> </div> <div class="rightCntr"> <div id="ctl00_RightBar_ArticleDetailRightBar1_PremiumSponsorTextAd1_SponsorWithImage" updatemode="Conditional"> <h2 class="headerControls">
+SPONSORED BY
+</h2> <div id="ctl00_RightBar_ArticleDetailRightBar1_PremiumSponsorTextAd1_SponsorAdWithImage" class="adBox"> <div class="adImage"> <a href="http://www.c-sharpcorner.com/AdRedirector.aspx?AdId=88&target=https://www.jetbrains.com/dotnet/?utm_source=csharpcorner&utm_medium=banner&utm_content=resharper-ultimate&utm_campaign=resharper" id="ctl00_RightBar_ArticleDetailRightBar1_PremiumSponsorTextAd1_HrefSponsorLinkImage" rel="nofollow" target="_blank"> <img src="./Find nth element from last in a Linked List_files/084523AM.png" id="ctl00_RightBar_ArticleDetailRightBar1_PremiumSponsorTextAd1_imgSponsor" width="75" height="90" class="image90"> </a> </div> <div class="adRight"> <a href="http://www.c-sharpcorner.com/AdRedirector.aspx?AdId=88&target=https://www.jetbrains.com/dotnet/?utm_source=csharpcorner&utm_medium=banner&utm_content=resharper-ultimate&utm_campaign=resharper" id="ctl00_RightBar_ArticleDetailRightBar1_PremiumSponsorTextAd1_HrefSponsorLink" class="MemberoftheMonth" target="_blank">JetBrains ReSharper Ultimate</a> <div id="ctl00_RightBar_ArticleDetailRightBar1_PremiumSponsorTextAd1_divSponsorDetail">.NET code analysis, refactorings, navigation, unit testing, code coverage and profiling in Visual Studio, a bonus for C++ devs, bundled at 50% off.</div> </div> </div> </div> <div class="clear"> </div> <div style="width: 336px; margin:10px 0;"> <a id="ctl00_RightBar_ArticleDetailRightBar1_NewsArticleAd1_AdRotatorArticle" href="http://www.c-sharpcorner.com/AdRedirector.aspx?BannerId=726&target=http://www.syncfusion.com/resources/techportal/ebooks?utm_medium=mindcrackerebJun15" target="_blank"><img src="./Find nth element from last in a Linked List_files/ebook-336x280.png" alt="Download Free eBooks" style="border-width:0px;"></a> </div> <h2 class="headerControls">
+Trending up <a href="http://www.c-sharpcorner.com/RSS/TopArticles.aspx" id="ctl00_RightBar_ArticleDetailRightBar1_TrendingUp1_RssEnabledImageButton" class="headerRss" target="_blank"></a> </h2> <div class="rightBox"> <ul class="trendingBox"> <li> <div class="numbers"> <span title="Pulse rate/hour" style="cursor: pointer;">
+01</span> </div> <div class="trendingDetail"> <a href="http://www.c-sharpcorner.com/UploadFile/219d4d/implement-search-paging-and-sort-in-mvc-5/">
+Implement Search, Paging and Sort in MVC 5</a> </div> </li> <li> <div class="numbers"> <span title="Pulse rate/hour" style="cursor: pointer;">
+02</span> </div> <div class="trendingDetail"> <a href="http://www.c-sharpcorner.com/UploadFile/20c06b/see-whats-new-in-C-Sharp-6-and-visual-studio-2015/">
+See What's New in C# 6 and Visual Studio 2015</a> </div> </li> <li> <div class="numbers"> <span title="Pulse rate/hour" style="cursor: pointer;">
+03</span> </div> <div class="trendingDetail"> <a href="http://www.c-sharpcorner.com/UploadFile/mahesh/what-is-net-2015/">
+What .NET 2015 Is</a> </div> </li> <li> <div class="numbers"> <span title="Pulse rate/hour" style="cursor: pointer;">
+04</span> </div> <div class="trendingDetail"> <a href="http://www.c-sharpcorner.com/UploadFile/9b86d4/how-to-return-multiple-values-from-a-function-in-C-Sharp/">
+How to Return Multiple Values From a Function in C#</a> </div> </li> <li> <div class="numbers"> <span title="Pulse rate/hour" style="cursor: pointer;">
+05</span> </div> <div class="trendingDetail"> <a href="http://www.c-sharpcorner.com/UploadFile/84c85b/is-mvc-replacing-Asp-Net/">
+Is MVC Replacing ASP.NET Web Forms?</a> </div> </li> <li> <div class="numbers"> <span title="Pulse rate/hour" style="cursor: pointer;">
+06</span> </div> <div class="trendingDetail"> <a href="http://www.c-sharpcorner.com/UploadFile/219d4d/basics-of-jquery-part-1/">
+Basics of jQuery: Part 1</a> </div> </li> <li> <div class="numbers"> <span title="Pulse rate/hour" style="cursor: pointer;">
+07</span> </div> <div class="trendingDetail"> <a href="http://www.c-sharpcorner.com/UploadFile/7ca517/ide-improvements-in-visual-studio-2015/">
+IDE Improvements in Visual Studio 2015</a> </div> </li> <li> <div class="numbers"> <span title="Pulse rate/hour" style="cursor: pointer;">
+08</span> </div> <div class="trendingDetail"> <a href="http://www.c-sharpcorner.com/UploadFile/8c19e8/Asp-Net-5-getting-started-with-Asp-Net-mvc-6/">
+ASP.Net 5: Getting Started With ASP.Net MVC 6</a> </div> </li> <li> <div class="numbers"> <span title="Pulse rate/hour" style="cursor: pointer;">
+09</span> </div> <div class="trendingDetail"> <a href="http://www.c-sharpcorner.com/UploadFile/00a8b7/interview-questions-for-2-year-experience-in-sql-and-C-Sharp/">
+Interview Questions For 2 Years Experience in SQL and C#</a> </div> </li> <li> <div class="numbers"> <span title="Pulse rate/hour" style="cursor: pointer;">
+10</span> </div> <div class="trendingDetail"> <a href="http://www.c-sharpcorner.com/UploadFile/8c19e8/Asp-Net-5-jump-start-to-angularjs-with-mvc-6-web-api/">
+ASP.Net 5: Jump Start to AngularJS With MVC 6 Web API</a> </div> </li> </ul> <a href="http://www.c-sharpcorner.com/Articles/TopArticles.aspx" class="viewAllLink">
+View All</a> </div> <div style="padding-bottom: 10px;"> <a href="https://twitter.com/csharpcorner" class="twitter-follow-button" data-show-count="true" data-lang="en" show_screen_name="true" data-width="100%">Follow @twitterapi</a> </div> <div id="fb-root"> </div> <div class="fb-like-box" data-href="https://www.facebook.com/pages/C-Corner/194086953935286" data-width="336px" data-show-faces="true" data-stream="false" data-header="true" data-border-color="#c6c6c6" data-max-rows="2" style="padding-bottom: 10px;
+border: none 0px" async="false"> </div> <div class="clear"> </div> </div> </div> </div> <div class="footer"> <div class="menuStripGray"> <div class="page"> <ul> <li class="first"><a href="http://www.c-sharpcorner.com/Members/mvps/">MVPs</a></li> <li><a href="http://www.c-sharpcorner.com/Articles/mostviewed.aspx">MOST VIEWED</a></li> <li><a href="http://www.c-sharpcorner.com/Members/legend/">LEGENDS</a></li> <li><a href="http://www.c-sharpcorner.com/articles/">NOW</a></li> <li><a href="http://www.c-sharpcorner.com/prizes/">PRIZES</a></li> <li><a href="http://www.c-sharpcorner.com/reviews/">REVIEWS</a></li> <li><a href="http://www.c-sharpcorner.com/survey/">SURVEY</a></li> <li><a href="http://www.c-sharpcorner.com/exam/">CERTIFICATIONS</a></li> <li><a href="http://www.c-sharpcorner.com/downloads/">DOWNLOADS</a></li> </ul> <div class="rightlink"> <a href="http://www.cbeyond.net/" target="_blank"><span class="hosted">Hosted By </span>
+CBeyond Cloud Services</a></div> </div> </div> <div class="menuStripBlue"> <div class="page"> <div class="menu"> <ul> <li class="first"><a href="http://www.c-sharpcorner.com/photos/">PHOTOS</a></li> <li><a href="http://www.c-sharpcorner.com/code/">CODE SNIPPETS</a> </li> <li class="display_none"><a href="http://www.c-sharpcorner.com/consulting/">CONSULTING</a> </li> <li class="display_none"><a href="http://www.c-sharpcorner.com/training/">TRAINING</a> </li> <li><a href="http://www.c-sharpcorner.com/beginners/">STUDENTS</a> </li> <li><a href="http://www.c-sharpcorner.com/Members/">MEMBERS</a> </li> <li><a href="http://www.c-sharpcorner.com/media/ContactUs.aspx">MEDIA KIT</a></li> <li><a href="http://www.c-sharpcorner.com/resources/aboutus.aspx">ABOUT US</a></li> <li><a href="http://www.c-sharpcorner.com/resources/">LINKS</a></li> <li><a href="http://www.c-sharpcorner.com/ideas/">IDEAS</a> </li> </ul> </div> </div> </div> <div class="footerBottom"> <div class="page"> <ul> <li class="first"><a href="http://www.c-sharpcorner.com/contactus.aspx">CONTACT
+US</a></li> <li><a href="http://www.c-sharpcorner.com/privacypolicy.aspx">PRIVACY POLICY</a></li> <li><a href="http://www.c-sharpcorner.com/termsconditions.aspx">TERMS &amp;
+CONDITIONS</a></li> <li><a href="http://www.c-sharpcorner.com/sitemap/">SITEMAP</a></li> <li><a href="http://www.c-sharpcorner.com/contactus.aspx?Type=6">REPORT ABUSE</a></li> </ul> <div class="social_link"> <ul> <li><a target="_blank" href="http://www.facebook.com/pages/C-Corner/194086953935286" class="facebook">facebook</a></li> <li><a target="_blank" href="http://twitter.com/csharpcorner" class="twitter">twitter</a></li> <li><a target="_blank" href="https://plus.google.com/u/0/114221266846457741050/posts" class="google">google</a></li> <li><a target="_blank" href="http://www.youtube.com/user/CsharpCorner1/" class="media">
+media</a></li> </ul> <p class="copyright">
+©2015
+C# Corner. All contents are copyright of their authors.</p> </div> </div> </div> </div> <div class="responsive_footer"> <ul> <li class="first"><a href="http://www.c-sharpcorner.com/contactus.aspx">Contact
+Us</a></li> <li><a href="http://www.c-sharpcorner.com/privacypolicy.aspx">Privacy Policy</a></li> <li><a href="http://www.c-sharpcorner.com/termsconditions.aspx">Terms &amp;
+Conditions</a></li> <li><a href="http://www.c-sharpcorner.com/resources/aboutus.aspx">About Us</a></li> </ul> <p>
+©2015
+C# Corner. All contents are copyright of their authors.</p> </div> </div> <input type="hidden" name="ctl00$hiddenFieldNext" id="ctl00_hiddenFieldNext"> <input type="hidden" name="ctl00$hiddenFieldPrevious" id="ctl00_hiddenFieldPrevious"> <meta name="google-signin-clientid" content="1008907732563-jaf78g0pj7k52q8efh0r22c58iol91cg.apps.googleusercontent.com"> <meta name="google-signin-scope" content="https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read profile"> <meta name="google-signin-requestvisibleactions" content="http://schemas.google.com/AddActivity"> <meta name="google-signin-cookiepolicy" content="single_host_origin"> <script type="text/javascript">
+$j(window).load(function() {
+window.fbAsyncInit = function() {
+// init the FB JS SDK
+FB.init({
+appId: '440531902678919', // App ID from the App Dashboard
+xfbml: true,  // parse XFBML tags on this page?
+version: 'v2.3'
+});
+// Additional initialization code such as adding Event Listeners goes here
+};
+// Load the SDK's source Asynchronously
+(function(d, debug) {
+var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+if (d.getElementById(id)) { return; }
+js = d.createElement('script'); js.id = id; js.async = true;
+js.src = "//connect.facebook.net/en_US/sdk" + (debug ? "/debug" : "") + ".js";
+ref.parentNode.insertBefore(js, ref);
+} (document, /*debug*/false));
+(function() {
+var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+po.src = 'https://apis.google.com/js/client:plusone.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+})();
+(function(d, t) {
+var g = d.createElement(t),
+s = d.getElementsByTagName(t)[0];
+g.src = '//platform.twitter.com/widgets.js';
+s.parentNode.insertBefore(g, s);
+} (document, 'script'));
+(function(d, t) {
+var g = d.createElement(t),
+s = d.getElementsByTagName(t)[0];
+g.src = '//platform.linkedin.com/in.js';
+s.parentNode.insertBefore(g, s);
+} (document, 'script'));
+});
+</script> <div id="fb-root"> </div> <input type="hidden" name="ctl00$HiddenFieldCurrentPageUrl" id="ctl00_HiddenFieldCurrentPageUrl" value="http%3a%2f%2fwww.c-sharpcorner.com%2fuploadfile%2frawatgaurav%2ffind-nth-element-from-last-in-a-linked-list%2fDefault.aspx"> <script type="text/javascript">
+//<![CDATA[
+var Page_Validators =  new Array(document.getElementById("ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorUserId"), document.getElementById("ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorPassword"));
+//]]> </script> <script type="text/javascript">
+//<![CDATA[
+var ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorUserId = document.all ? document.all["ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorUserId"] : document.getElementById("ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorUserId");
+ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorUserId.controltovalidate = "ctl00_HeaderWithoutAjax1_Login1_TextBoxUserId";
+ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorUserId.focusOnError = "t";
+ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorUserId.errormessage = "*";
+ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorUserId.display = "Dynamic";
+ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorUserId.validationGroup = "LeftLogin";
+ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorUserId.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorUserId.initialvalue = "";
+var ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorPassword = document.all ? document.all["ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorPassword"] : document.getElementById("ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorPassword");
+ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorPassword.controltovalidate = "ctl00_HeaderWithoutAjax1_Login1_TextBoxPassword";
+ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorPassword.focusOnError = "t";
+ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorPassword.errormessage = "*";
+ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorPassword.display = "Dynamic";
+ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorPassword.validationGroup = "LeftLogin";
+ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorPassword.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_HeaderWithoutAjax1_Login1_RequiredFieldValidatorPassword.initialvalue = "";
+//]]> </script> <div> <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWJAKQoY++CgLWhpmdAgL5qLTNDwKG2sDjDwLK34tbArmB+v4DAqzNvY8LAofWx+wHAqffju4DAsWHqLYOAt/E7eYIAsWy3PENAtTZ9swPAqHymPUBAu2g4IYPAqKy6oYLArTOrN8MAoaFxNMCAr2bnoYBAoq7n44DArvtkskKAsC9rPgBApPG95sFAvqYvr8NArqZvLQNAozTxuQIAqyhgL0KAumZnI0HAunC4L8LAuu5rv8PAqzJoPwHAt2gqOsNAqaV1o0JApzesN4MAprImu0FApX3q9AKC05G3krwksKH+j0dylZCRuamt5o="> </div> <script type="text/javascript">
+//<![CDATA[
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+ValidatorOnLoad();
+}
+function ValidatorOnSubmit() {
+if (Page_ValidationActive) {
+return ValidatorCommonOnSubmit();
+}
+else {
+return true;
+}
+}
+WebForm_AutoFocus('ctl00_HeaderWithoutAjax1_Login1_TextBoxUserId');//]]> </script> </form> <script type="text/javascript">
+(function(d, t) {
+var g = d.createElement(t),
+s = d.getElementsByTagName(t)[0];
+g.src = '/JQuery/jquery.TrendingNow_09032014.js';
+s.parentNode.insertBefore(g, s);
+} (document, 'script'));
+function Like() {
+$j.ajax({
+url: "/Handlers/CsharpCommon.ashx?method=like_content&type=Article",
+data: { article_id: 'e2e5ce94-8813-4840-904c-8f577bf10245' },
+type: "POST",
+async: false,
+success: function(response) {
+var label = $j('#ctl00_LabelLikeCount');
+if (response == "login")
+window.location = 'http://www.c-sharpcorner.com/UserRegistration/Logincheck.aspx?ReturnURL=/uploadfile/rawatgaurav/find-nth-element-from-last-in-a-linked-list/Default.aspx';
+else if (parseInt(response) == 1) {
+label.text(parseInt(label.text()) + 1);
+//                        label.css('color', 'green');
+}
+else {
+label.css('color', 'red');
+}
+}
+});
+}
+</script> <script type="text/javascript">
+$j(document).ready(function() {
+$j('a.show-dropdown').mouseover(function() {
+//get the height position of the current object
+var elementHeight = $j(this).height();
+var offsetWidth = 10;
+var offsetHeight = 10;
+//Get the tool tip container width adn height
+var toolTipWidth = $j("#dropDown").width();
+var toolTipHeight = $j("#dropDown").height();
+//Get the HTML document width and height
+var documentWidth = $j(document).width();
+var documentHeight = $j(document).height();
+//Set top and bottom position of the tool tip
+var top = $j(this).offset().top;
+if (top + toolTipHeight > documentHeight) {
+top = documentHeight - toolTipHeight - offsetHeight - (2 * elementHeight);
+}
+var left = $j(this).offset().left + offsetWidth;
+if (left + toolTipWidth > documentWidth) {
+left = documentWidth - toolTipWidth - (2 * offsetWidth);
+}
+$j('#dropDown').show();
+});
+$j('a.show-dropdown').mouseout(function() {
+$j("#dropDown").hide();
+});
+$j('#dropDown').mouseover(function() {
+$j('#dropDown').show();
+});
+$j('#dropDown').mouseout(function() {
+$j('#dropDown').hide();
+});
+});
+</script> <script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-535360-1']);
+_gaq.push(['_trackPageview']);
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>  </body></html>
