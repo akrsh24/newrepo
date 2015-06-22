@@ -77,6 +77,7 @@ void insert (int value)
         tail=tail->next;
     }
 }
+// to fetch a node from a list
 int fetch(int index)
 {
     int i,k=0;
